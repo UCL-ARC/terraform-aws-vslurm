@@ -5,11 +5,11 @@ variable "aws_prefix" {
 }
 
 variable "aws_region" {
-  type    = string
+  type = string
 }
 
 variable "rhel9_ami_id" {
-  type    = string
+  type = string
 }
 
 variable "instance_type" {
@@ -23,9 +23,9 @@ variable "node_count" {
 }
 
 variable "subnet_id" {
-  type    = string
+  type = string
 }
 
 variable "vpc_id" {
-  type    = string
+  type = string
 }
