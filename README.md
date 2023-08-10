@@ -1,43 +1,15 @@
-# terraform-template
+# terraform-aws-vslurm
 
-## ARC Terraform template
+## vslurm
 
 ⚠️ This repository is still under construction! ⚠️
 
-A Terraform template for new ARC Terraform projects or modules. It has a
-suggested skeleton structure and GitHub Actions workflows.
+A tool for deploying a virtual slurm cluster on AWS using terraform.
 
 ## Usage
 
-1. Fork this repo. If creating a self-contained module, name your repo
-   according to the [module naming convention](https://developer.hashicorp.com/terraform/registry/modules/publish)
-   of `terraform-<PROVIDER>-<NAME>`.
-2. Change [CODEOWNERS](.github/CODEOWNERS) to you / your Team.
-
-<!-- BEGIN_TF_DOCS -->
-## Requirements
-
-No requirements.
-
-## Providers
-
-No providers.
-
-## Modules
-
-No modules.
-
-## Resources
-
-No resources.
-
-## Inputs
-
-No inputs.
-
-## Outputs
-
-No outputs.
-
----
-<!-- END_TF_DOCS -->
+1. Clone the repository
+2. Configure the environment variables (see `.env.sample`)
+3. Run `make ec2-vslurm` to deploy the cluster
+4. Run `make ec2-vslurm-ssh` to log in to the cluster
+5. Run `make ec2-vslurm-destroy` to tear the cluster down
