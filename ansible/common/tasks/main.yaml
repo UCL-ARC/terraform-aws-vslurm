@@ -1,0 +1,32 @@
+---
+- name: Hosts File
+  copy:
+    src: /etc/hosts
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644
+
+- set_fact: abort=true
+
+- rpm_key:
+    state: present
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9
+  tags: common_init
+
+- name: Common RPM Initialization List
+  set_fact:
+    pkg_list:
+      - vim
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+  when:
+    - abort is undefined
+  tags: common_init
+
+- name: Install Common RPMs
+  yum:
+    name: "{{ pkg_list }}"
+    state: installed
+  when:
+    - abort is undefined
+  tags: common_init
