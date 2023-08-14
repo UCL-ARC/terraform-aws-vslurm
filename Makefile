@@ -25,3 +25,8 @@ ec2-vslurm-destroy:
 
 ec2-vslurm-ssh:
 	cd ./ec2-vslurm && ./ssh.sh
+
+clean:
+	rm ./*\~ ./*\# \
+		./ec2-vslurm/*\~ ./ec2-vslurm/*\# \
+		./ec2-vslurm/node/*\~ ./ec2-vslurm/node/*\#
