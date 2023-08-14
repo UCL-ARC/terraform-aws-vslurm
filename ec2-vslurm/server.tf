@@ -35,7 +35,14 @@ resource "aws_instance" "server" {
       "sudo sh -c 'echo ${aws_instance.login.private_ip} ${aws_instance.login.private_dns} login >> /etc/hosts'",
       "sudo sh -c 'echo ${module.node[0].private_ip} ${module.node[0].private_dns} node0 >> /etc/hosts'",
       "sudo sh -c 'echo ${module.node[1].private_ip} ${module.node[1].private_dns} node1 >> /etc/hosts'",
-      "ssh-keyscan server login node0 node1 >> /home/${local.ec2_username}/.ssh/known_hosts"
+      "ssh-keyscan server login node0 node1 >> /home/${local.ec2_username}/.ssh/known_hosts",
+      "sudo sh -c 'echo [s] >> /etc/ansible/hosts'",
+      "sudo sh -c 'echo server ansible_ssh_host=${self.private_ip} >> /etc/ansible/hosts'",
+      "sudo sh -c 'echo [l] >> /etc/ansible/hosts'",
+      "sudo sh -c 'echo login ansible_ssh_host=${aws_instance.login.private_ip} >> /etc/ansible/hosts'",
+      "sudo sh -c 'echo [c] >> /etc/ansible/hosts'",
+      "sudo sh -c 'echo c1 ansible_ssh_host=${module.node[0].private_ip} >> /etc/ansible/hosts'",
+      "sudo sh -c 'echo c2 ansible_ssh_host=${module.node[1].private_ip} >> /etc/ansible/hosts'"
     ]
   }
 }
