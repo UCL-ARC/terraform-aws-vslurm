@@ -5,7 +5,7 @@
 /bin/sed -i -e 's/\\h/$NICKNAME/g' /etc/bashrc
 
 # Update packages
-yum update -y --allowerasing
+dnf update -y --allowerasing
 
 # Shutdown the instance after a few hours
 shutdown +300

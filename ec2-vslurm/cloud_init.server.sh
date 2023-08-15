@@ -5,10 +5,10 @@
 /bin/sed -i -e 's/\\h/$NICKNAME/g' /etc/bashrc
 
 # Update and install packages
-yum update -y --allowerasing
-yum install -y vim
+dnf update -y --allowerasing
+dnf install -y vim
 dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-yum install -y pdsh pdsh-rcmd-ssh ansible
+dnf install -y pdsh pdsh-rcmd-ssh ansible
 
 # Shutdown the instance after a few hours
 shutdown +300
