@@ -1,0 +1,51 @@
+---
+
+- name: Munge Group
+  group:
+    name: munge
+    gid: 201
+    state: present
+
+- name: Slurm Group
+  group:
+    name: slurm
+    gid: 202
+    state: present
+
+- name: Munge User
+  user:
+    name: munge
+    comment: ""
+    uid: 201
+    group: munge
+    shell: /sbin/nologin
+    createhome: no
+    system: yes
+
+- name: Slurm User
+  user:
+    name: slurm
+    comment: ""
+    uid: 202
+    group: slurm
+    shell: /sbin/nologin
+    createhome: no
+    system: yes
+
+- name: Munge Key
+  command: create-munge-key
+  args:
+    creates: /etc/munge/munge.key
+
+- name: Slurm Common RPM List
+  set_fact:
+    pkg_list:
+      - slurm
+      - slurm-perlapi
+      - slurm-devel
+
+- name: Slurm Common RPM Install
+  dnf:
+    name: "{{ pkg_list }}"
+    state: installed
+

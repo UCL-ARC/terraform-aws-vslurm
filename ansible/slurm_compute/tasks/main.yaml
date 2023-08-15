@@ -1,0 +1,13 @@
+---
+
+- name: Slurm Compute RPM List
+  set_fact:
+    pkg_list:
+      - slurm-slurmd
+      - slurm-pam_slurm
+      - slurm-contribs
+
+- name: Slurm Compute RPM Install
+  dnf:
+    name: "{{ pkg_list }}"
+    state: installed

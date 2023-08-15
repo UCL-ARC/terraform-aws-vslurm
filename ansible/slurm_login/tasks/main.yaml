@@ -1,0 +1,11 @@
+---
+
+- name: Slurm Login RPM List
+  set_fact:
+    pkg_list:
+      - slurm-contribs
+
+- name: Slurm Login RPM Install
+  dnf:
+    name: "{{ pkg_list }}"
+    state: installed

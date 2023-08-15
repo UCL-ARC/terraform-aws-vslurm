@@ -1,0 +1,13 @@
+---
+
+- name: Slurm Server RPM List
+  set_fact:
+    pkg_list:
+      - slurm-slurmctld
+      - slurm-slurmdbd
+      - slurm-example-configs
+
+- name: Slurm Server RPM Install
+  dnf:
+    name: "{{ pkg_list }}"
+    state: installed
