@@ -7,13 +7,13 @@ resource "aws_instance" "node" {
   vpc_security_group_ids = var.security_group_ids
 
   tags = {
-    Name = "${var.aws_prefix}-node${var.index}"
+    Name = "${var.aws_prefix}-c${var.index + 1}"
   }
 
   user_data = templatefile(
     "${path.module}/cloud_init.node.sh",
     {
-      nickname = "${var.aws_prefix}-node${var.index}"
+      nickname = "${var.aws_prefix}-c${var.index + 1}"
     }
   )
 }
