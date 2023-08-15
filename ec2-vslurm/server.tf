@@ -45,4 +45,9 @@ resource "aws_instance" "server" {
       "sudo sh -c 'echo c2 ansible_ssh_host=${module.node[1].private_ip} >> /etc/ansible/hosts'"
     ]
   }
+
+  provisioner "file" {
+    source      = "${path.module}/../ansible"
+    destination = "/home/${local.ec2_username}"
+  }
 }

@@ -4,3 +4,17 @@
   become: true
   roles:
     - { role: common, tags: common }
+    - { role: slurm_common, tags: slurm_common }
+
+- hosts: s
+  roles:
+    - { role: slurm_server, tags slurm_server }
+
+- hosts: c
+  roles:
+    - { role: slurm_compute, tags: slurm_compute }
+
+- hosts: l
+  roles:
+    - { role: slurm_login, tags: slurm_login }
+

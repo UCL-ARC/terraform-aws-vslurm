@@ -24,9 +24,10 @@
   tags: common_init
 
 - name: Install Common RPMs
-  yum:
+  dnf:
     name: "{{ pkg_list }}"
     state: installed
+    allowerasing: true
   when:
     - abort is undefined
   tags: common_init
