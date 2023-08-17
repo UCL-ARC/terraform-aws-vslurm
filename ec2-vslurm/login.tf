@@ -11,7 +11,7 @@ resource "aws_instance" "login" {
   }
 
   user_data = templatefile(
-    "${path.module}/cloud_init.login.sh",
+    "${path.module}/scripts/login_user_data",
     {
       nickname = "${var.aws_prefix}-login"
     }

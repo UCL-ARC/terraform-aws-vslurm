@@ -11,7 +11,7 @@ resource "aws_instance" "server" {
   }
 
   user_data = templatefile(
-    "${path.module}/cloud_init.server.sh",
+    "${path.module}/scripts/server_user_data",
     {
       nickname = "${var.aws_prefix}-server"
     }
@@ -58,7 +58,7 @@ resource "aws_instance" "server" {
 
   provisioner "file" {
     content = templatefile(
-      "${path.module}/server_hosts",
+      "${path.module}/scripts/server_hosts",
       {
         server_ip  = self.private_ip
         server_dns = self.private_dns
@@ -75,7 +75,7 @@ resource "aws_instance" "server" {
 
   provisioner "file" {
     content = templatefile(
-      "${path.module}/server_ansible_hosts",
+      "${path.module}/scripts/server_ansible_hosts",
       {
         server_ip = self.private_ip
         login_ip  = aws_instance.login.private_ip

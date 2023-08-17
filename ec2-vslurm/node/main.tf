@@ -11,7 +11,7 @@ resource "aws_instance" "node" {
   }
 
   user_data = templatefile(
-    "${path.module}/cloud_init.node.sh",
+    "${path.module}/scripts/node_user_data",
     {
       nickname = "${var.aws_prefix}-c${var.index + 1}"
     }
