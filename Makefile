@@ -36,7 +36,7 @@ ec2-vslurm-destroy:
 	$(call terraform-destroy, ./ec2-vslurm)
 
 ec2-vslurm-ssh:
-	cd ./ec2-vslurm && ./ssh.sh
+	cd ./ec2-vslurm && ./scripts/ssh_server
 
 clean:
 	rm ./*\~ ./*\# \
