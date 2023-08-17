@@ -10,6 +10,15 @@ define terraform-apply
 	terraform apply --auto-approve
 endef
 
+define terraform-plan
+	. init.sh $$ \
+    echo "Running: terraform plan on $(1)" && \
+    cd $(1) && \
+	terraform init -upgrade && \
+	terraform validate && \
+	terraform plan
+endef
+
 define terraform-destroy
 	. init.sh $$ \
     echo "Running: terraform destroy on $(1)" && \
@@ -19,6 +28,9 @@ endef
 
 ec2-vslurm:
 	$(call terraform-apply, ./ec2-vslurm)
+
+ec2-vslurm-dry-run:
+	$(call terraform-plan, ./ec2-vslurm)
 
 ec2-vslurm-destroy:
 	$(call terraform-destroy, ./ec2-vslurm)
