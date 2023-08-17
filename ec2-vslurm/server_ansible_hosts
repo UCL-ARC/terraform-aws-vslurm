@@ -1,7 +1,0 @@
-[s]
-server ansible_ssh_host=${server_ip}
-[l]
-login ansible_ssh_host=${login_ip}
-[c]
-c1 ansible_ssh_host=${c1_ip}
-c2 ansible_ssh_host=${c2_ip}
