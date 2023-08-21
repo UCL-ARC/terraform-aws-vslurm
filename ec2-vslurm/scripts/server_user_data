@@ -7,6 +7,8 @@
 # Update and install packages
 dnf update -y --allowerasing
 dnf install -y vim
+ARCH=$( /usr/bin/arch )
+subscription-manager repos --enable codeready-builder-for-rhel-9-$ARCH-rpms
 dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 dnf install -y pdsh pdsh-rcmd-ssh ansible
 
