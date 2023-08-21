@@ -1,0 +1,10 @@
+#cloud-config
+
+runcmd:
+ - echo hello!
+
+# write private key
+write_files:
+- content: "${private_key}"
+  path: /root/.ssh/id_rsa
+  permissions: 400
