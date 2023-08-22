@@ -14,10 +14,6 @@ variable "security_group_ids" {
   type = list(string)
 }
 
-variable "server_private_ip" {
-  type = string
-}
-
 variable "index" {
   type        = number
   description = "Index of this node in the set. Integer"

@@ -23,7 +23,7 @@ data "cloudinit_config" "server_user_data" {
     content = templatefile(
       "${path.module}/scripts/server_cloud_init.yaml",
       {
-        private_key = tls_private_key.global_key.private_key_pem
+        private_key  = tls_private_key.global_key.private_key_pem
         ec2_username = local.ec2_username
       }
     )
@@ -53,27 +53,10 @@ resource "aws_instance" "server" {
   }
 
   provisioner "remote-exec" {
-    # - waits for cloud-init
-    # - writes host file
-    # - scans the hosts
-    # - writes ansible inventory
-
     inline = [
       "echo 'Waiting for cloud-init to complete...'",
       "sudo cloud-init status --wait > /dev/null",
       "echo 'Completed cloud-init!'",
-      "sudo sh -c 'echo ${self.private_ip} ${self.private_dns} server >> /etc/hosts'",
-      "sudo sh -c 'echo ${aws_instance.login.private_ip} ${aws_instance.login.private_dns} login >> /etc/hosts'",
-      "sudo sh -c 'echo ${module.node[0].private_ip} ${module.node[0].private_dns} c1 >> /etc/hosts'",
-      "sudo sh -c 'echo ${module.node[1].private_ip} ${module.node[1].private_dns} c2 >> /etc/hosts'",
-      "ssh-keyscan server login c1 c2 >> /home/${local.ec2_username}/.ssh/known_hosts",
-      "sudo sh -c 'echo [s] >> /etc/ansible/hosts'",
-      "sudo sh -c 'echo server ansible_ssh_host=${self.private_ip} >> /etc/ansible/hosts'",
-      "sudo sh -c 'echo [l] >> /etc/ansible/hosts'",
-      "sudo sh -c 'echo login ansible_ssh_host=${aws_instance.login.private_ip} >> /etc/ansible/hosts'",
-      "sudo sh -c 'echo [c] >> /etc/ansible/hosts'",
-      "sudo sh -c 'echo c1 ansible_ssh_host=${module.node[0].private_ip} >> /etc/ansible/hosts'",
-      "sudo sh -c 'echo c2 ansible_ssh_host=${module.node[1].private_ip} >> /etc/ansible/hosts'"
     ]
   }
 
@@ -83,35 +66,46 @@ resource "aws_instance" "server" {
     destination = "/home/${local.ec2_username}"
   }
 
-  # # writes a hosts file onto the server to be appended to /etc/hosts
-  # provisioner "file" {
-  #   content = templatefile(
-  #     "${path.module}/scripts/server_hosts",
-  #     {
-  #       server_ip  = self.private_ip
-  #       server_dns = self.private_dns
-  #       login_ip   = aws_instance.login.private_ip
-  #       login_dns  = aws_instance.login.private_dns
-  #       c1_ip      = module.node[0].private_ip
-  #       c1_dns     = module.node[0].private_dns
-  #       c2_ip      = module.node[1].private_ip
-  #       c2_dns     = module.node[1].private_dns
-  #     }
-  #   )
-  #   destination = "hosts"
-  # }
+  # writes a hosts file onto the server to be appended to /etc/hosts
+  provisioner "file" {
+    content = templatefile(
+      "${path.module}/scripts/server_hosts",
+      {
+        server_ip  = self.private_ip
+        server_dns = self.private_dns
+        login_ip   = aws_instance.login.private_ip
+        login_dns  = aws_instance.login.private_dns
+        nodes      = module.node[*]
+        c1_ip      = module.node[0].private_ip
+        c1_dns     = module.node[0].private_dns
+        c2_ip      = module.node[1].private_ip
+        c2_dns     = module.node[1].private_dns
+      }
+    )
+    destination = "hosts"
+  }
 
-  # # writes an ansible inventory onto the server to be moved to /etc/ansible/hosts
-  # provisioner "file" {
-  #   content = templatefile(
-  #     "${path.module}/scripts/server_ansible_hosts",
-  #     {
-  #       server_ip = self.private_ip
-  #       login_ip  = aws_instance.login.private_ip
-  #       c1_ip     = module.node[0].private_ip
-  #       c2_ip     = module.node[1].private_ip
-  #     }
-  #   )
-  #   destination = "ansible_hosts"
-  # }
+  # writes an ansible inventory onto the server to be moved to /etc/ansible/hosts
+  provisioner "file" {
+    content = templatefile(
+      "${path.module}/scripts/server_ansible_hosts",
+      {
+        server_ip = self.private_ip
+        login_ip  = aws_instance.login.private_ip
+        nodes     = module.node[*]
+        c1_ip     = module.node[0].private_ip
+        c2_ip     = module.node[1].private_ip
+      }
+    )
+    destination = "ansible_hosts"
+  }
+
+  # moves the hosts files and keyscans
+  provisioner "remote-exec" {
+    inline = [
+      "sudo sh -c 'echo /home/${local.ec2_username}/hosts >> /etc/hosts'",
+      "sudo sh -c 'echo /home/${local.ec2_username}/ansible_hosts >> /etc/ansible/hosts'",
+      "ssh-keyscan server login c1 c2 >> /home/${local.ec2_username}/.ssh/known_hosts"
+    ]
+  }
 }

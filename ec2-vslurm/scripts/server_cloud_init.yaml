@@ -6,5 +6,5 @@ runcmd:
 # write private key
 write_files:
 - content: "${private_key}"
-  path: /home/${ec2_username}/.ssh/id_rsa
-  permissions: 400
+  path: "/home/${ec2_username}/.ssh/id_rsa"
+  permissions: 600

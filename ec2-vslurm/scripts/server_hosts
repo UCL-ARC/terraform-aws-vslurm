@@ -1,4 +1,8 @@
 ${server_ip} ${server_dns} server
 ${login_ip} ${login_dns} login
+%{ for node in nodes[*] ~}
+${node.private_ip} ${node.private_dns} ${node.node_id}
+%{ endfor ~}
+
 ${c1_ip} ${c1_dns} c1
 ${c2_ip} ${c2_dns} c2
