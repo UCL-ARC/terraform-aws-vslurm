@@ -1,3 +1,25 @@
+data "cloudinit_config" "node_user_data" {
+  part {
+    filename     = "node_user_data"
+    content_type = "text/x-shellscript"
+    content = templatefile(
+      "${path.module}/scripts/node_user_data",
+      {
+        nickname = "${var.aws_prefix}-c${var.index + 1}"
+      }
+    )
+  }
+
+  part {
+    filename     = "node_cloud_init.yaml"
+    content_type = "text/cloud-config"
+    content = templatefile(
+      "${path.module}/scripts/node_cloud_init.yaml",
+      {}
+    )
+  }
+}
+
 resource "aws_instance" "node" {
   ami           = var.ami
   instance_type = var.node_instance_type
@@ -9,11 +31,4 @@ resource "aws_instance" "node" {
   tags = {
     Name = "${var.aws_prefix}-c${var.index + 1}"
   }
-
-  user_data = templatefile(
-    "${path.module}/scripts/node_user_data",
-    {
-      nickname = "${var.aws_prefix}-c${var.index + 1}"
-    }
-  )
 }
