@@ -7,4 +7,6 @@ runcmd:
 write_files:
 - content: "${private_key}"
   path: "/home/${ec2_username}/.ssh/id_rsa"
-  permissions: 600
+  permissions: '0600'
+  owner: "${ec2_username}:${ec2_username}"
+  defer: true
