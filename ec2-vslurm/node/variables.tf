@@ -1,17 +1,21 @@
 variable "aws_prefix" {
-  type = string
+  type        = string
+  description = "Prefix for the compute node AWS resources"
 }
 
 variable "subnet_id" {
-  type = string
+  type        = string
+  description = "Subnet ID of the subnet that the compute node instance will be deployed in"
 }
 
 variable "ami" {
-  type = string
+  type        = string
+  description = "AMI ID of the base image for the compute node"
 }
 
 variable "security_group_ids" {
-  type = list(string)
+  type        = list(string)
+  description = "Security Group IDs to be applied to the compute node instance"
 }
 
 variable "index" {
@@ -20,10 +24,12 @@ variable "index" {
 }
 
 variable "key_name" {
-  type = string
+  type        = string
+  description = "Name of the key pair that AWS will provide to the compute node instances"
 }
 
 variable "node_instance_type" {
-  type    = string
-  default = "t2.micro"
+  type        = string
+  default     = "t2.micro"
+  description = "Name of the instance type for the compute node instances"
 }
