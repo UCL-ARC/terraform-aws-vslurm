@@ -6,6 +6,3 @@ login ansible_ssh_host=${login_ip}
 %{ for node in nodes[*] ~}
 ${node.node_id} ansible_ssh_host=${node.private_ip}
 %{ endfor ~}
-
-c1 ansible_ssh_host=${c1_ip}
-c2 ansible_ssh_host=${c2_ip}

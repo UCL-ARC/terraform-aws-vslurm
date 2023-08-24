@@ -44,6 +44,7 @@ resource "aws_instance" "server" {
   }
 
   user_data = data.cloudinit_config.server_user_data.rendered
+  user_data_replace_on_change = true
 
   connection {
     type        = "ssh"
@@ -76,10 +77,6 @@ resource "aws_instance" "server" {
         login_ip   = aws_instance.login.private_ip
         login_dns  = aws_instance.login.private_dns
         nodes      = module.node[*]
-        c1_ip      = module.node[0].private_ip
-        c1_dns     = module.node[0].private_dns
-        c2_ip      = module.node[1].private_ip
-        c2_dns     = module.node[1].private_dns
       }
     )
     destination = "hosts"
@@ -93,8 +90,6 @@ resource "aws_instance" "server" {
         server_ip = self.private_ip
         login_ip  = aws_instance.login.private_ip
         nodes     = module.node[*]
-        c1_ip     = module.node[0].private_ip
-        c2_ip     = module.node[1].private_ip
       }
     )
     destination = "ansible_hosts"
@@ -103,8 +98,9 @@ resource "aws_instance" "server" {
   # moves the hosts files and keyscans
   provisioner "remote-exec" {
     inline = [
-      "sudo sh -c 'echo /home/${local.ec2_username}/hosts >> /etc/hosts'",
-      "sudo sh -c 'echo /home/${local.ec2_username}/ansible_hosts >> /etc/ansible/hosts'",
+      "set -x",
+      "sudo sh -c 'cat /home/${local.ec2_username}/hosts >> /etc/hosts'",
+      "sudo sh -c 'cat /home/${local.ec2_username}/ansible_hosts >> /etc/ansible/hosts'",
       "ssh-keyscan server login c1 c2 >> /home/${local.ec2_username}/.ssh/known_hosts"
     ]
   }
