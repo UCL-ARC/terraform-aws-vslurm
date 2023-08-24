@@ -28,6 +28,9 @@ resource "aws_instance" "login" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [aws_security_group.default.id]
 
+  user_data                   = data.cloudinit_config.login_user_data.rendered
+  user_data_replace_on_change = true
+
   tags = {
     Name = "${var.aws_prefix}-login"
   }

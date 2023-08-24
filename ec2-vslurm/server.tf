@@ -43,7 +43,7 @@ resource "aws_instance" "server" {
     Name = "${var.aws_prefix}-server"
   }
 
-  user_data = data.cloudinit_config.server_user_data.rendered
+  user_data                   = data.cloudinit_config.server_user_data.rendered
   user_data_replace_on_change = true
 
   connection {

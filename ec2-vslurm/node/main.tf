@@ -28,6 +28,9 @@ resource "aws_instance" "node" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = var.security_group_ids
 
+  user_data                   = data.cloudinit_config.node_user_data.rendered
+  user_data_replace_on_change = true
+
   tags = {
     Name = "${var.aws_prefix}-c${var.index + 1}"
   }
