@@ -13,3 +13,6 @@ A tool for deploying a virtual slurm cluster on AWS using terraform.
 3. Run `make ec2-vslurm` to deploy the cluster
 4. Run `make ec2-vslurm-ssh` to log in to the cluster
 5. Run `make ec2-vslurm-destroy` to tear the cluster down
+
+## Overview
+![vslurm diagram](diagrams/terraform-aws-vslurm.drawio.svg)
