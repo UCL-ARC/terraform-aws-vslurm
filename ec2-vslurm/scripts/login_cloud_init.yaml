@@ -1,4 +1,4 @@
 #cloud-config
 
-# liberate root for ssh
-# disable_root: false
+package_update: true
+package_upgrade: true
