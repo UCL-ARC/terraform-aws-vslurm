@@ -16,3 +16,9 @@ repos:
       - id: markdownlint # Configure in .mdlrc
       - id: shellcheck
       - id: shfmt
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.83.0
+    hooks:
+      - id: terraform_fmt
+        args:
+          - --args=-recursive
