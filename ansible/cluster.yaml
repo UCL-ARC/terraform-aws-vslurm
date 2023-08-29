@@ -17,4 +17,3 @@
 - hosts: l
   roles:
     - { role: slurm_login, tags: slurm_login }
-

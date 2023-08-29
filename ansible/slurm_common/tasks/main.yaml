@@ -48,4 +48,3 @@
   dnf:
     name: "{{ pkg_list }}"
     state: installed
-
