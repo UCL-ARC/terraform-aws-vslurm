@@ -9,3 +9,7 @@ output "private_ip" {
 output "private_dns" {
   value = aws_instance.node.private_dns
 }
+
+output "tags_all" {
+  value = aws_instance.node.tags_all
+}
