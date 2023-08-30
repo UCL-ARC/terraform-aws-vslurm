@@ -1,8 +1,5 @@
 #cloud-config
 
-runcmd:
- - echo "Hello! I am the deployer (cloud-init) >:)"
-
 package_update: true
 package_upgrade: true
 # yum_repos:
@@ -17,10 +14,8 @@ packages:
 #  - pdsh
 #  - pdsh-rcmd-ssh
 
-# runcmd:
-# %{ for node in nodes ~}
-#   - [ sh, -c, "echo ${node.private_ip} ${node.tags_all.host_alias} >> /etc/hosts "]
-# %{ endfor ~}
+runcmd:
+  - [ sh, -c, "echo '${cluster_hosts}' >> /etc/hosts "]
 
 # users:
 # - name: ansible

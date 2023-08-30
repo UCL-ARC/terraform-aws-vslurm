@@ -20,12 +20,17 @@ data "cloudinit_config" "deployer_user_data" {
       "${path.module}/scripts/deployer_cloud_init.yaml",
       {
         private_key_base64 = base64encode(tls_private_key.global_key.private_key_pem)
-        nodes = concat(
-          [
-            aws_instance.server,
-            aws_instance.login
-          ],
-          module.node[*]
+        cluster_hosts = templatefile(
+          "${path.module}/scripts/server_hosts",
+          {
+            nodes = concat(
+              [
+                aws_instance.server,
+                aws_instance.login
+              ],
+              module.node[*]
+            )
+          }
         )
       }
     )
