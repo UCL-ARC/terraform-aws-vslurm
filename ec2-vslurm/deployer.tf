@@ -6,6 +6,7 @@ data "cloudinit_config" "deployer_user_data" {
   # - clones the git repo
   # - runs ansible
   # - dies
+  gzip = false
 
   part {
     filename     = "deployer_user_data"
