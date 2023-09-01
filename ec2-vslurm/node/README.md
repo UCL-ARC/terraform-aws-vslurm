@@ -42,6 +42,7 @@ No modules.
 | <a name="output_node_id"></a> [node\_id](#output\_node\_id) | n/a |
 | <a name="output_private_dns"></a> [private\_dns](#output\_private\_dns) | n/a |
 | <a name="output_private_ip"></a> [private\_ip](#output\_private\_ip) | n/a |
+| <a name="output_tags_all"></a> [tags\_all](#output\_tags\_all) | n/a |
 
 ---
 <!-- END_TF_DOCS -->
