@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Hello, I am the deployer (bash) :)"
+
+# Shutdown the instance after a few hours
+shutdown +300

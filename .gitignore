@@ -3,8 +3,8 @@
 .terraform
 .terraform.lock.hcl
 terraform.tfvars
-*.tfstate
-*.tfstate.backup
+deployer_user_data_rendered
+*.tfstate*
 *~
 .\#*
 \#*

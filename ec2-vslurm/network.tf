@@ -17,12 +17,12 @@ resource "aws_vpc_security_group_egress_rule" "all_egress" {
   security_group_id = aws_security_group.default.id
 }
 
-resource "aws_vpc_security_group_ingress_rule" "ssh_from_deployer" {
+resource "aws_vpc_security_group_ingress_rule" "ssh_from_local" {
   description = "TLS"
   from_port   = 22
   to_port     = 22
   ip_protocol = 6 # TCP
-  cidr_ipv4   = "${data.http.deployer_ip.response_body}/32"
+  cidr_ipv4   = "${data.http.local_ip.response_body}/32"
 
   security_group_id = aws_security_group.default.id
 }
