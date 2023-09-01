@@ -25,6 +25,15 @@ resource "aws_vpc_security_group_ingress_rule" "ssh_from_local" {
   cidr_ipv4   = "${data.http.local_ip.response_body}/32"
 
   security_group_id = aws_security_group.default.id
+
+
+  lifecycle {
+    # The local public ip address must be ipv4
+    precondition {
+      condition     = length(data.http.local_ip.response_body) == 14
+      error_message = "The local ip address must be ipv4. Local IP: ${data.http.local_ip.response_body}"
+    }
+  }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ingress_self" {
