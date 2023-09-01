@@ -14,8 +14,17 @@ packages:
 #  - pdsh
 #  - pdsh-rcmd-ssh
 
-runcmd:
-  - [ sh, -c, "echo '${cluster_hosts}' >> /etc/hosts "]
+write_files:
+  - path: /root/cluster_hosts
+    content: |
+      ${indent(6, cluster_hosts)}
+  - path: /root/.ssh/id_rsa
+    permissions: '0o600'
+    defer: true
+    encoding: base64
+    content: |
+      ${indent(6, private_key_base64)}
+
 
 # users:
 # - name: ansible
@@ -39,12 +48,3 @@ runcmd:
 #         forks: 1
 #         private_key: /home/ansible/.ssh/id_rsa
 #         inventory: /home/ansible/ansible_hosts
-
-# write_files:
-#   - path: "/home/ansible/.ssh/id_rsa"
-#     owner: ansible:ansible
-#     permissions: '0o600'
-#     defer: true
-#     encoding: base64
-#     content: |
-#       ${private_key_base64}
