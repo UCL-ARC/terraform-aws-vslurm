@@ -6,5 +6,5 @@ data "aws_vpc" "vpc" {
 # Get the deployer's IP address (that's you)
 # to permit incoming ssh traffic
 data "http" "local_ip" {
-  url = "https://api64.ipify.org"
+  url = "https://api.ipify.org"
 }
