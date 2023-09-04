@@ -20,9 +20,8 @@ data "cloudinit_config" "deployer_user_data" {
     content = templatefile(
       "${path.module}/scripts/deployer_cloud_init.yaml",
       {
-        private_key_base64 = base64encode(tls_private_key.global_key.private_key_pem)
         cluster_hosts = templatefile(
-          "${path.module}/scripts/server_hosts",
+          "${path.module}/scripts/cluster_hosts",
           {
             nodes = concat(
               [
@@ -33,6 +32,15 @@ data "cloudinit_config" "deployer_user_data" {
             )
           }
         )
+        ansible_hosts = templatefile(
+          "${path.module}/scripts/ansible_hosts",
+          {
+            server        = aws_instance.server,
+            login         = aws_instance.login,
+            compute_nodes = module.node[*]
+          }
+        )
+        private_key_base64 = base64encode(tls_private_key.global_key.private_key_pem)
       }
     )
   }
