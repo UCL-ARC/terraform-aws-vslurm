@@ -7,12 +7,12 @@ package_upgrade: true
 #     baseurl: https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 #     enabled: true
 #     name: Extra Packages for Enterprise Linux 9 - Release
-packages:
-  - ansible
-  - git
-  - python3-pip
-#  - pdsh
-#  - pdsh-rcmd-ssh
+# packages:
+#   - ansible
+#   - git
+#   - python3-pip
+#   - pdsh
+#   - pdsh-rcmd-ssh
 
 write_files:
   - path: /root/cluster_hosts
