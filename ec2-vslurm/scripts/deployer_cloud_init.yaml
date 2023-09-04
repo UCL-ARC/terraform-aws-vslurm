@@ -2,17 +2,9 @@
 
 package_update: true
 package_upgrade: true
-# yum_repos:
-#   epel-release:
-#     baseurl: https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-#     enabled: true
-#     name: Extra Packages for Enterprise Linux 9 - Release
-# packages:
-#   - ansible
-#   - git
-#   - python3-pip
-#   - pdsh
-#   - pdsh-rcmd-ssh
+packages:
+  - git
+  - python3-pip
 
 write_files:
   - path: /root/cluster_hosts
@@ -28,26 +20,18 @@ write_files:
     content: |
       ${indent(6, private_key_base64)}
 
-
-# users:
-# - name: ansible
-#   gecos: Ansible User
-#   shell: /bin/bash
-#   groups: users,admin,wheel
-#   sudo: ALL=(ALL) NOPASSWD:ALL
-
 # ansible:
 #   install_method: pip
 #   package_name: ansible
-#   run_user: ansible
+#   run_user: root
 #   setup_controller:
 #     repositories:
-#       - path: /home/ansible/terraform-aws-vslurm
-#         source: git@github.com:UCL-ARC/terraform-aws-vslurm.git
+#       path: /root/
+#       source: "git@github.com:UCL-ARC/terraform-aws-vslurm.git -b 8-configure-the-deployer-instance"
 #     run_ansible:
-#       - playbook_dir: /home/ansible/terraform-aws-vslurm/ansible
-#         playbook_name: cluster.yaml
-#         timeout: 120
+#       - playbook_dir: /root/terraform-aws-vslurm/ansible
+#         playbook_name: test.yaml
+#         timeout: 300
 #         forks: 1
-#         private_key: /home/ansible/.ssh/id_rsa
-#         inventory: /home/ansible/ansible_hosts
+#         private_key: /root/.ssh/id_rsa
+#         inventory: /root/ansible_hosts
