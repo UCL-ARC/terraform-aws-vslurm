@@ -14,8 +14,11 @@ data "cloudinit_config" "deployer_user_data" {
     content = templatefile(
       "${path.module}/scripts/deployer_user_data",
       {
-        git_args = "-b 8-configure-the-deployer-instance --depth=1"
-        git_repo = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
+        git_args         = "-b 8-configure-the-deployer-instance --depth=1"
+        git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
+        git_dir          = "/root/terraform-aws-vslurm"
+        ansible_dir      = "/root/terraform-aws-vslurm/ansible"
+        ansible_playbook = "test.yaml"
       }
     )
   }
@@ -81,5 +84,10 @@ resource "aws_instance" "deployer" {
       "sudo cloud-init status --wait > /dev/null",
       "echo 'Completed cloud-init!'",
     ]
+  }
+
+  provisioner "local-exec" {
+    command    = "scp ${local.ssh_args} ${local.ec2_username}@${self.public_ip}:/var/log/cloud-init-output.log ${local.ec2_username}@${self.public_ip}:/var/log/cloud-init.log ${path.module}/logs"
+    on_failure = continue
   }
 }
