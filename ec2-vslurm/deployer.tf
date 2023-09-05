@@ -11,7 +11,13 @@ data "cloudinit_config" "deployer_user_data" {
   part {
     filename     = "deployer_user_data"
     content_type = "text/x-shellscript"
-    content      = file("${path.module}/scripts/deployer_user_data")
+    content = templatefile(
+      "${path.module}/scripts/deployer_user_data",
+      {
+        git_args = "-b 8-configure-the-deployer-instance --depth=1"
+        git_repo = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
+      }
+    )
   }
 
   part {
