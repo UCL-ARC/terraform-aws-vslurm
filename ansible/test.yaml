@@ -1,0 +1,8 @@
+---
+- name: Test SSH connection
+  hosts: all
+  remote_user: ec2-user
+
+  tasks:
+  - name: My name is
+    command: hostname

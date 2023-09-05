@@ -1,0 +1,8 @@
+[s]
+${server.tags_all.host_alias} ansible_ssh_host=${server.private_ip}
+[l]
+${login.tags_all.host_alias} ansible_ssh_host=${login.private_ip}
+[c]
+%{ for node in compute_nodes[*] ~}
+${node.tags_all.host_alias} ansible_ssh_host=${node.private_ip}
+%{ endfor ~}

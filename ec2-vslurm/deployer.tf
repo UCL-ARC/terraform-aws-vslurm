@@ -11,7 +11,16 @@ data "cloudinit_config" "deployer_user_data" {
   part {
     filename     = "deployer_user_data"
     content_type = "text/x-shellscript"
-    content      = file("${path.module}/scripts/deployer_user_data")
+    content = templatefile(
+      "${path.module}/scripts/deployer_user_data",
+      {
+        git_args         = "-b main --depth=1"
+        git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
+        git_dir          = "/root/terraform-aws-vslurm"
+        ansible_dir      = "/root/terraform-aws-vslurm/ansible"
+        ansible_playbook = "test.yaml"
+      }
+    )
   }
 
   part {
@@ -20,9 +29,8 @@ data "cloudinit_config" "deployer_user_data" {
     content = templatefile(
       "${path.module}/scripts/deployer_cloud_init.yaml",
       {
-        private_key_base64 = base64encode(tls_private_key.global_key.private_key_pem)
         cluster_hosts = templatefile(
-          "${path.module}/scripts/server_hosts",
+          "${path.module}/scripts/cluster_hosts",
           {
             nodes = concat(
               [
@@ -33,6 +41,15 @@ data "cloudinit_config" "deployer_user_data" {
             )
           }
         )
+        ansible_hosts = templatefile(
+          "${path.module}/scripts/ansible_hosts",
+          {
+            server        = aws_instance.server,
+            login         = aws_instance.login,
+            compute_nodes = module.node[*]
+          }
+        )
+        private_key_base64 = base64encode(tls_private_key.global_key.private_key_pem)
       }
     )
   }
@@ -67,5 +84,10 @@ resource "aws_instance" "deployer" {
       "sudo cloud-init status --wait > /dev/null",
       "echo 'Completed cloud-init!'",
     ]
+  }
+
+  provisioner "local-exec" {
+    command    = "scp ${local.ssh_args} ${local.ec2_username}@${self.public_ip}:/var/log/cloud-init-output.log ${local.ec2_username}@${self.public_ip}:/var/log/cloud-init.log ${path.module}/logs"
+    on_failure = continue
   }
 }

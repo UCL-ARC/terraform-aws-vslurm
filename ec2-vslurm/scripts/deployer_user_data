@@ -1,6 +1,9 @@
-#!/bin/bash
+#!/bin/bash -x
 
-echo "Hello, I am the deployer (bash) :)"
+pip install --no-input ansible && \
+    git clone ${git_args} ${git_repo} ${git_dir} && \
+    cd ${ansible_dir} && \
+    ansible-playbook -v ${ansible_playbook}
 
-# Shutdown the instance after a few hours
-shutdown +300
+# Shutdown the instance after a few minutes
+shutdown +10

@@ -17,5 +17,5 @@ output "deployer_ssh_command" {
 
 resource "local_file" "deployer_user_data_rendered" {
   content  = base64decode(data.cloudinit_config.deployer_user_data.rendered)
-  filename = "${path.module}/deployer_user_data_rendered"
+  filename = "${path.module}/logs/deployer_user_data_rendered"
 }
