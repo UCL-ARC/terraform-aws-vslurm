@@ -4,6 +4,7 @@
 .terraform.lock.hcl
 terraform.tfvars
 deployer_user_data_rendered
+logs/
 *.tfstate*
 *~
 .\#*
