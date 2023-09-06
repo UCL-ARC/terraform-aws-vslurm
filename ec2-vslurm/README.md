@@ -63,13 +63,13 @@
 | <a name="input_node_count"></a> [node\_count](#input\_node\_count) | Number of compute nodes to initialize the cluster with | `number` | `2` | no |
 | <a name="input_rhel9_ami_id"></a> [rhel9\_ami\_id](#input\_rhel9\_ami\_id) | RHEL9 AMI ID for the instances | `string` | n/a | yes |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | AWS subnet ID for the subnet to deploy the instances in | `string` | n/a | yes |
-| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | AWS VPC ID for the VPS that the subnet is deployed in | `string` | n/a | yes |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | AWS VPC ID for the VPC that the subnet is deployed in | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_deployer_ssh_command"></a> [deployer\_ssh\_command](#output\_deployer\_ssh\_command) | An ssh command to access the deployer |
+| <a name="output_deployer_ssh_command"></a> [deployer\_ssh\_command](#output\_deployer\_ssh\_command) | An SSH command to access the deployer |
 | <a name="output_server_ssh_args"></a> [server\_ssh\_args](#output\_server\_ssh\_args) | Flags for the SSH command |
 | <a name="output_server_ssh_command"></a> [server\_ssh\_command](#output\_server\_ssh\_command) | An ssh command to access the server |
 | <a name="output_server_username_and_host"></a> [server\_username\_and\_host](#output\_server\_username\_and\_host) | The server username and public IP address |
