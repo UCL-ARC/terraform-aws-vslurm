@@ -1,8 +1,3 @@
-output "node_id" {
-  value       = "c${var.index + 1}"
-  description = "Unique identifier for the compute node"
-}
-
 output "private_ip" {
   value       = aws_instance.node.private_ip
   description = "Private IP address of the compute node"
