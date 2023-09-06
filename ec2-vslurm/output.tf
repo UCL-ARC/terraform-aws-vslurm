@@ -1,18 +1,21 @@
 output "server_ssh_command" {
-  value = local.ssh_command
+  value       = local.ssh_command
+  description = "An ssh command to access the server"
 }
 
 output "server_username_and_host" {
-  value = local.server_username_and_host
+  value       = local.server_username_and_host
+  description = "The server username and public IP address"
 }
 
 output "server_ssh_args" {
-  value = local.ssh_args
+  value       = local.ssh_args
+  description = "Flags for the SSH command"
 }
 
 output "deployer_ssh_command" {
   value       = local.deployer_ssh_command
-  description = "Debug: An ssh command to access the deployer"
+  description = "An ssh command to access the deployer"
 }
 
 resource "local_file" "deployer_user_data_rendered" {
