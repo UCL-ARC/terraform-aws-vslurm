@@ -20,16 +20,16 @@ variable "security_group_ids" {
 
 variable "index" {
   type        = number
-  description = "Index of this node in the set. Integer"
+  description = "Integer index of this node in the cluster"
 }
 
 variable "key_name" {
   type        = string
-  description = "Name of the key pair that AWS will provide to the compute node instances"
+  description = "Name of the key pair that AWS will provide to the compute node instance"
 }
 
 variable "node_instance_type" {
   type        = string
   default     = "t2.micro"
-  description = "Name of the instance type for the compute node instances"
+  description = "AWS instance type for the compute node instance"
 }

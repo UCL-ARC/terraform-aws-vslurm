@@ -15,7 +15,7 @@ output "server_ssh_args" {
 
 output "deployer_ssh_command" {
   value       = local.deployer_ssh_command
-  description = "An ssh command to access the deployer"
+  description = "An SSH command to access the deployer"
 }
 
 resource "local_file" "deployer_user_data_rendered" {

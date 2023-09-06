@@ -33,5 +33,5 @@ variable "subnet_id" {
 
 variable "vpc_id" {
   type        = string
-  description = "AWS VPC ID for the VPS that the subnet is deployed in"
+  description = "AWS VPC ID for the VPC that the subnet is deployed in"
 }
