@@ -10,14 +10,14 @@ data "cloudinit_config" "node_user_data" {
     )
   }
 
-  # part {
-  #   filename     = "node_cloud_init.yaml"
-  #   content_type = "text/cloud-config"
-  #   content = templatefile(
-  #     "${path.module}/scripts/node_cloud_init.yaml",
-  #     {}
-  #   )
-  # }
+  part {
+    filename     = "node_cloud_init.yaml"
+    content_type = "text/cloud-config"
+    content = templatefile(
+      "${path.module}/scripts/node_cloud_init.yaml",
+      {}
+    )
+  }
 }
 
 resource "aws_instance" "node" {

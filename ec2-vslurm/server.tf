@@ -17,17 +17,17 @@ data "cloudinit_config" "server_user_data" {
     )
   }
 
-  # part {
-  #   filename     = "server_cloud_init.yaml"
-  #   content_type = "text/cloud-config"
-  #   content = templatefile(
-  #     "${path.module}/scripts/server_cloud_init.yaml",
-  #     {
-  #       private_key  = tls_private_key.global_key.private_key_pem
-  #       ec2_username = local.ec2_username
-  #     }
-  #   )
-  # }
+  part {
+    filename     = "server_cloud_init.yaml"
+    content_type = "text/cloud-config"
+    content = templatefile(
+      "${path.module}/scripts/server_cloud_init.yaml",
+      {
+        private_key  = tls_private_key.global_key.private_key_pem
+        ec2_username = local.ec2_username
+      }
+    )
+  }
 }
 
 
