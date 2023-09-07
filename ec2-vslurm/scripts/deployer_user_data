@@ -1,9 +1,9 @@
 #!/bin/bash -x
 
-pip install --no-input ansible && \
-    git clone ${git_args} ${git_repo} ${git_dir} && \
-    cd ${ansible_dir} && \
-    ansible-playbook -v ${ansible_playbook}
+pip install --no-input ansible #&& \
+#    git clone ${git_args} ${git_repo} ${git_dir} && \
+#    cd ${ansible_dir} && \
+#    ansible-playbook -v ${ansible_playbook}
 
 # Shutdown the instance after a few minutes
-shutdown +10
+shutdown +300
