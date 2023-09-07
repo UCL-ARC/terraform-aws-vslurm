@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+cat /root/cluster_hosts >> /etc/hosts
+
 pip install --no-input ansible #&& \
 #    git clone ${git_args} ${git_repo} ${git_dir} && \
 #    cd ${ansible_dir} && \

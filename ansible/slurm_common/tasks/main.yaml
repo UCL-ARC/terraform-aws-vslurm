@@ -32,14 +32,10 @@
     createhome: no
     system: yes
 
-- name: Munge Key
-  command: create-munge-key
-  args:
-    creates: /etc/munge/munge.key
-
 - name: Slurm Common RPM List
   set_fact:
     pkg_list:
+      - munge
       - slurm
       - slurm-perlapi
       - slurm-devel
@@ -48,3 +44,37 @@
   dnf:
     name: "{{ pkg_list }}"
     state: installed
+
+- name: Create Munge Dir and Key
+  command: create-munge-key
+  args:
+    creates: /etc/munge/munge.key
+
+- name: Munge Directory
+  file:
+    path: /etc/munge
+    owner: munge
+    group: munge
+    state: directory
+    mode: 0700
+
+- name: Fetch Munge Key
+  run_once: true
+  fetch:
+    flat: true
+    src: /etc/munge/munge.key
+    dest: /root/terraform-aws-vslurm/ansible/slurm_common/files/
+
+- name: Copy Munge Key to Cluster
+  copy:
+    src: munge.key
+    dest: /etc/munge/munge.key
+    owner: munge
+    group: munge
+    mode: 0400
+
+- name: Start Munge Service
+  service:
+    name: munge
+    state: started
+    enabled: yes
