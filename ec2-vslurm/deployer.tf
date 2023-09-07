@@ -8,20 +8,20 @@ data "cloudinit_config" "deployer_user_data" {
   # - dies
   gzip = false
 
-  # part {
-  #   filename     = "deployer_user_data"
-  #   content_type = "text/x-shellscript"
-  #   content = templatefile(
-  #     "${path.module}/scripts/deployer_user_data",
-  #     {
-  #       git_args         = "-b main --depth=1"
-  #       git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
-  #       git_dir          = "/root/terraform-aws-vslurm"
-  #       ansible_dir      = "/root/terraform-aws-vslurm/ansible"
-  #       ansible_playbook = "test.yaml"
-  #     }
-  #   )
-  # }
+  part {
+    filename     = "deployer_user_data"
+    content_type = "text/x-shellscript"
+    content = templatefile(
+      "${path.module}/scripts/deployer_user_data",
+      {
+        git_args         = "-b main --depth=1"
+        git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
+        git_dir          = "/root/terraform-aws-vslurm"
+        ansible_dir      = "/root/terraform-aws-vslurm/ansible"
+        ansible_playbook = "test.yaml"
+      }
+    )
+  }
 
   part {
     filename     = "deployer_cloud_init.yaml"
