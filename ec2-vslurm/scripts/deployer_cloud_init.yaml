@@ -3,6 +3,7 @@
 package_update: true
 package_upgrade: true
 packages:
+  - vim
   - git
   - python3-pip
 
