@@ -1,13 +1,31 @@
 ---
 
+- name: Slurm DB Configuration File
+  copy:
+    src: slurmdbd.conf
+    dest: /etc/slurm/slurmdbd.conf
+    owner: root
+    group: root
+    mode: 0600
+
 - name: Slurm Server RPM List
   set_fact:
     pkg_list:
       - slurm-slurmctld
       - slurm-slurmdbd
-      - slurm-example-configs
+      - mariadb-server
+     # - slurm-example-configs
+
+- name: Slurm Server pip List
+  set_fact:
+    pip_list:
+      - mysql
 
 - name: Slurm Server RPM Install
   dnf:
     name: "{{ pkg_list }}"
     state: installed
+
+- name: Slurm Server pip Install
+  pip:
+    name: "{{ pip_list }}"

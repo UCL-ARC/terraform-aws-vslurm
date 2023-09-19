@@ -73,6 +73,30 @@
     group: munge
     mode: 0400
 
+- name: Slurm Directory
+  file:
+    path: /etc/slurm
+    owner: root
+    group: root
+    state: directory
+    mode: 0755
+
+- name: Slurm Configuration File
+  template:
+    src: slurm.conf
+    dest: /etc/slurm/slurm.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Slurm Log Directory
+  file:
+    path: /var/log/slurm
+    owner: slurm
+    group: slurm
+    state: directory
+    mode: 0755
+
 - name: Start Munge Service
   service:
     name: munge
