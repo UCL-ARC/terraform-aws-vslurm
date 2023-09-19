@@ -32,7 +32,7 @@
     createhome: no
     system: yes
 
-- name: Create Munge Dir and Key
+- name: Create Munge Key
   command: create-munge-key
   args:
     creates: /etc/munge/munge.key
@@ -40,6 +40,14 @@
 - name: Munge Directory
   file:
     path: /etc/munge
+    owner: munge
+    group: munge
+    state: directory
+    mode: 0700
+
+- name: Secure Munge PRNG
+  file:
+    path: /var/lib/munge
     owner: munge
     group: munge
     state: directory
@@ -81,6 +89,14 @@
     path: /var/log/slurm
     owner: slurm
     group: slurm
+    state: directory
+    mode: 0755
+
+- name: Munge Log Directory
+  file:
+    path: /var/log/munge
+    owner: munge
+    group: munge
     state: directory
     mode: 0755
 
