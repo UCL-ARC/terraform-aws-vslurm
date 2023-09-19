@@ -14,18 +14,10 @@
       - slurm-slurmctld
       - slurm-slurmdbd
       - mariadb-server
+      - python3-PyMySQL
      # - slurm-example-configs
-
-- name: Slurm Server pip List
-  set_fact:
-    pip_list:
-      - mysql
 
 - name: Slurm Server RPM Install
   dnf:
     name: "{{ pkg_list }}"
     state: installed
-
-- name: Slurm Server pip Install
-  pip:
-    name: "{{ pip_list }}"

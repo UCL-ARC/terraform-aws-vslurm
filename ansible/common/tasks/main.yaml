@@ -26,7 +26,6 @@
   set_fact:
     pkg_list:
       - vim
-      - python3-pip
       - munge
       - https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
   when:
