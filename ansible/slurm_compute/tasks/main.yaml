@@ -11,3 +11,9 @@
   dnf:
     name: "{{ pkg_list }}"
     state: installed
+
+- name: Slurm Service
+  service:
+    name: slurmd
+    state: started
+    enabled: yes
