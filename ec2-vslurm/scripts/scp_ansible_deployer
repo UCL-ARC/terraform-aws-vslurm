@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# run this from ec2-vslurm
-
-function tf_output() {
-	terraform output -raw "$1"
-}
-
-eval "scp -r $(tf_output ssh_args) ../ansible $(tf_output deployer_username_and_host):~"
