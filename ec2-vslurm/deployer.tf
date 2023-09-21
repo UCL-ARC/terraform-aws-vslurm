@@ -14,7 +14,7 @@ data "cloudinit_config" "deployer_user_data" {
     content = templatefile(
       "${path.module}/scripts/deployer_user_data",
       {
-        git_args         = "-b 10-write-a-basic-ansible-playbook-to-configure-the-cluster --depth=1"
+        git_args         = "-b main --depth=1"
         git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
         git_dir          = "/root/terraform-aws-vslurm"
         ansible_dir      = "/root/terraform-aws-vslurm/ansible"
