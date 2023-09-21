@@ -1,13 +1,76 @@
 ---
 
+- name: Slurm DB Configuration File
+  copy:
+    src: slurmdbd.conf
+    dest: /etc/slurm/slurmdbd.conf
+    owner: root
+    group: root
+    mode: 0600
+
 - name: Slurm Server RPM List
   set_fact:
     pkg_list:
       - slurm-slurmctld
       - slurm-slurmdbd
-      - slurm-example-configs
+      - mariadb-server
+      - python3-PyMySQL
+    # - slurm-example-configs
 
 - name: Slurm Server RPM Install
   dnf:
     name: "{{ pkg_list }}"
     state: installed
+
+- name: Maria DB Service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Slurm Account DB
+  mysql_db:
+    name: slurm_acct_db
+    state: present
+    login_unix_socket: /var/lib/mysql/mysql.sock
+
+- name: Slurm MySQL User
+  mysql_user:
+    name: slurm
+    host: server
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    password: '*97C165CCACCAD8DFE21431AA259E3AF9A593C933'
+    encrypted: yes
+    priv: 'slurm_acct_db.*:ALL,GRANT'
+    state: present
+    update_password: always
+
+- name: Slurm MySQL User
+  mysql_user:
+    name: slurm
+    host: vslurm
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    password: '*97C165CCACCAD8DFE21431AA259E3AF9A593C933'
+    encrypted: yes
+    priv: 'slurm_acct_db.*:ALL,GRANT'
+    state: present
+    update_password: always
+
+- name: Slurm DB Service
+  service:
+    name: slurmdbd
+    state: started
+    enabled: yes
+
+- name: Slurm Controller Service
+  service:
+    name: slurmctld
+    state: started
+    enabled: yes
+
+- name: Create Cluster
+  command:
+    cmd: sacctmgr -i create cluster vslurm
+  register: sacctmgr_cmd
+  failed_when: sacctmgr_cmd.rc >= 2
+  changed_when: sacctmgr_cmd.rc == 0

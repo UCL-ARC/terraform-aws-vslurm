@@ -1,15 +1,32 @@
 ---
-- name: Hosts File
+- name: Copy Cluster Hosts File
   copy:
     src: /etc/hosts
     dest: /etc/hosts
     owner: root
     group: root
     mode: 0644
+  tags: common_init
+
+- name: Copy RSA key
+  copy:
+    src: /root/.ssh/id_rsa
+    dest: /home/ec2-user/.ssh/id_rsa
+    owner: ec2-user
+    group: ec2-user
+    mode: 0700
+  tags: common_init
 
 - set_fact: abort=true
 
-- rpm_key:
+- name: Upgrade All Packages
+  dnf:
+    name: "*"
+    state: latest
+  tags: common_init
+
+- name: Check the EPEL9 RPM Key
+  rpm_key:
     state: present
     key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9
   tags: common_init
@@ -18,6 +35,7 @@
   set_fact:
     pkg_list:
       - vim
+      - munge
       - https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
   when:
     - abort is undefined

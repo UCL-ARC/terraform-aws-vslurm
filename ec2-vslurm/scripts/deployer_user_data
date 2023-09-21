@@ -1,9 +1,17 @@
 #!/bin/bash -x
 
-pip install --no-input ansible && \
-    git clone ${git_args} ${git_repo} ${git_dir} && \
-    cd ${ansible_dir} && \
+/usr/bin/cat /root/cluster_hosts >> /etc/hosts
+
+/usr/bin/pip install --no-input ansible && \
+    /usr/bin/git clone ${git_args} ${git_repo} ${git_dir}
+cd ${ansible_dir} && \
+    ansible-playbook -v ${ansible_playbook} --tags common_init && \
+    ansible-playbook -v ${ansible_playbook} --tags slurm_common && \
+    ansible-playbook -v ${ansible_playbook} --tags slurm_server && \
+    ansible-playbook -v ${ansible_playbook} --tags slurm_login && \
+    ansible-playbook -v ${ansible_playbook} --tags slurm_compute && \
+    ansible all -m ansible.builtin.reboot && \
     ansible-playbook -v ${ansible_playbook}
 
 # Shutdown the instance after a few minutes
-shutdown +10
+shutdown +30

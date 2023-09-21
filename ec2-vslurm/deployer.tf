@@ -1,11 +1,5 @@
 
 data "cloudinit_config" "deployer_user_data" {
-  # Renders a multipart MIME file which:
-  # - updates packages
-  # - sets up for ansible
-  # - clones the git repo
-  # - runs ansible
-  # - dies
   gzip = false
 
   part {
@@ -18,7 +12,7 @@ data "cloudinit_config" "deployer_user_data" {
         git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
         git_dir          = "/root/terraform-aws-vslurm"
         ansible_dir      = "/root/terraform-aws-vslurm/ansible"
-        ansible_playbook = "test.yaml"
+        ansible_playbook = "cluster.yaml"
       }
     )
   }

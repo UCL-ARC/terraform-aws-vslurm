@@ -3,6 +3,7 @@
 package_update: true
 package_upgrade: true
 packages:
+  - vim
   - git
   - python3-pip
 
@@ -19,19 +20,3 @@ write_files:
     encoding: base64
     content: |
       ${indent(6, private_key_base64)}
-
-# ansible:
-#   install_method: pip
-#   package_name: ansible
-#   run_user: root
-#   setup_controller:
-#     repositories:
-#       path: /root/
-#       source: "git@github.com:UCL-ARC/terraform-aws-vslurm.git -b 8-configure-the-deployer-instance"
-#     run_ansible:
-#       - playbook_dir: /root/terraform-aws-vslurm/ansible
-#         playbook_name: test.yaml
-#         timeout: 300
-#         forks: 1
-#         private_key: /root/.ssh/id_rsa
-#         inventory: /root/ansible_hosts
