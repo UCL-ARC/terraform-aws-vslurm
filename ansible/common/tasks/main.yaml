@@ -8,6 +8,15 @@
     mode: 0644
   tags: common_init
 
+- name: Copy RSA key
+  copy:
+    src: /root/.ssh/id_rsa
+    dest: /home/ec2-user/.ssh/id_rsa
+    owner: ec2-user
+    group: ec2-user
+    mode: 0700
+  tags: common_init
+
 - set_fact: abort=true
 
 - name: Upgrade All Packages
