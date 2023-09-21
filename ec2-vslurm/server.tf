@@ -1,10 +1,4 @@
 data "cloudinit_config" "server_user_data" {
-  # Renders a multipart MIME file which:
-  # - improves the prompt
-  # - updates and installs packages
-  # - schedules shutdown for +5 hours
-  # - enables root login
-  # - writes the private key for root
 
   part {
     filename     = "server_user_data"

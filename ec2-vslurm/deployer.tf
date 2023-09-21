@@ -1,11 +1,5 @@
 
 data "cloudinit_config" "deployer_user_data" {
-  # Renders a multipart MIME file which:
-  # - updates packages
-  # - sets up for ansible
-  # - clones the git repo
-  # - runs ansible
-  # - dies
   gzip = false
 
   part {
