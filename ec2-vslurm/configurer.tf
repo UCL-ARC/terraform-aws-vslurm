@@ -29,6 +29,7 @@ data "cloudinit_config" "configurer_user_data" {
             nodes = concat(
               [
                 aws_instance.server,
+                aws_instance.database,
                 aws_instance.login
               ],
               module.compute_node[*]
@@ -39,6 +40,7 @@ data "cloudinit_config" "configurer_user_data" {
           "${path.module}/scripts/ansible_hosts",
           {
             server        = aws_instance.server,
+            database      = aws_instance.database,
             login         = aws_instance.login,
             compute_nodes = module.compute_node[*]
           }

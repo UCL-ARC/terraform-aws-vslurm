@@ -1,5 +1,7 @@
 [s]
 ${server.tags_all.host_alias} ansible_ssh_host=${server.private_ip}
+[d]
+${database.tags_all.host_alias} ansible_ssh_host=${database.private_ip}
 [l]
 ${login.tags_all.host_alias} ansible_ssh_host=${login.private_ip}
 [c]
