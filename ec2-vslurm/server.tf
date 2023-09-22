@@ -1,5 +1,4 @@
 data "cloudinit_config" "server_user_data" {
-
   part {
     filename     = "server_user_data"
     content_type = "text/x-shellscript"
@@ -14,16 +13,9 @@ data "cloudinit_config" "server_user_data" {
   part {
     filename     = "server_cloud_init.yaml"
     content_type = "text/cloud-config"
-    content = templatefile(
-      "${path.module}/scripts/server_cloud_init.yaml",
-      {
-        private_key  = tls_private_key.global_key.private_key_pem
-        ec2_username = local.ec2_username
-      }
-    )
+    content      = file("${path.module}/scripts/server_cloud_init.yaml")
   }
 }
-
 
 resource "aws_instance" "server" {
   ami           = var.rhel9_ami_id
@@ -33,11 +25,11 @@ resource "aws_instance" "server" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [aws_security_group.default.id]
 
+  user_data                   = data.cloudinit_config.server_user_data.rendered
+  user_data_replace_on_change = true
+
   tags = {
     Name       = "${var.aws_prefix}-server"
     host_alias = "server"
   }
-
-  user_data                   = data.cloudinit_config.server_user_data.rendered
-  user_data_replace_on_change = true
 }

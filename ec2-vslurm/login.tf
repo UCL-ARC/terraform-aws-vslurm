@@ -13,10 +13,7 @@ data "cloudinit_config" "login_user_data" {
   part {
     filename     = "login_cloud_init.yaml"
     content_type = "text/cloud-config"
-    content = templatefile(
-      "${path.module}/scripts/login_cloud_init.yaml",
-      {}
-    )
+    content      = file("${path.module}/scripts/login_cloud_init.yaml")
   }
 }
 

@@ -1,0 +1,61 @@
+---
+
+- name: Slurm Database Configuration File
+  copy:
+    src: slurmdbd.conf
+    dest: /etc/slurm/slurmdbd.conf
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Slurm Database RPM List
+  set_fact:
+    pkg_list:
+      - slurm-slurmdbd
+      - mariadb-server
+      - python3-PyMySQL
+
+- name: Slurm Database RPM Install
+  dnf:
+    name: "{{ pkg_list }}"
+    state: installed
+
+- name: MariaDB Service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Slurm Account DB
+  mysql_db:
+    name: slurm_acct_db
+    state: present
+    login_unix_socket: /var/lib/mysql/mysql.sock
+
+- name: Slurm MySQL User
+  mysql_user:
+    name: slurm
+    host: server
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    password: '*97C165CCACCAD8DFE21431AA259E3AF9A593C933'
+    encrypted: yes
+    priv: 'slurm_acct_db.*:ALL,GRANT'
+    state: present
+    update_password: always
+
+- name: Slurm MySQL User
+  mysql_user:
+    name: slurm
+    host: vslurm
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    password: '*97C165CCACCAD8DFE21431AA259E3AF9A593C933'
+    encrypted: yes
+    priv: 'slurm_acct_db.*:ALL,GRANT'
+    state: present
+    update_password: always
+
+- name: Slurm Database Service
+  service:
+    name: slurmdbd
+    state: started
+    enabled: yes

@@ -13,10 +13,7 @@ data "cloudinit_config" "node_user_data" {
   part {
     filename     = "node_cloud_init.yaml"
     content_type = "text/cloud-config"
-    content = templatefile(
-      "${path.module}/scripts/node_cloud_init.yaml",
-      {}
-    )
+    content      = file("${path.module}/scripts/node_cloud_init.yaml")
   }
 }
 

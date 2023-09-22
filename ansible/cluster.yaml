@@ -5,6 +5,10 @@
     - { role: common, tags: common }
     - { role: slurm_common, tags: slurm_common }
 
+- hosts: d
+  roles:
+    - { role: slurm_database, tags: slurm_database }
+
 - hosts: s
   roles:
     - { role: slurm_server, tags: slurm_server }
