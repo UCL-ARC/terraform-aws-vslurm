@@ -1,12 +1,12 @@
 
-data "cloudinit_config" "deployer_user_data" {
+data "cloudinit_config" "configurer_user_data" {
   gzip = false
 
   part {
-    filename     = "deployer_user_data"
+    filename     = "configurer_user_data"
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/scripts/deployer_user_data",
+      "${path.module}/scripts/configurer_user_data",
       {
         git_args         = "-b main --depth=1"
         git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
@@ -18,10 +18,10 @@ data "cloudinit_config" "deployer_user_data" {
   }
 
   part {
-    filename     = "deployer_cloud_init.yaml"
+    filename     = "configurer_cloud_init.yaml"
     content_type = "text/cloud-config"
     content = templatefile(
-      "${path.module}/scripts/deployer_cloud_init.yaml",
+      "${path.module}/scripts/configurer_cloud_init.yaml",
       {
         cluster_hosts = templatefile(
           "${path.module}/scripts/cluster_hosts",
@@ -50,7 +50,7 @@ data "cloudinit_config" "deployer_user_data" {
 }
 
 
-resource "aws_instance" "deployer" {
+resource "aws_instance" "configurer" {
   ami           = var.rhel9_ami_id
   instance_type = var.instance_type
   key_name      = aws_key_pair.ssh.key_name
@@ -59,10 +59,10 @@ resource "aws_instance" "deployer" {
   vpc_security_group_ids = [aws_security_group.default.id]
 
   tags = {
-    Name = "${var.aws_prefix}-deployer"
+    Name = "${var.aws_prefix}-configurer"
   }
 
-  user_data                   = data.cloudinit_config.deployer_user_data.rendered
+  user_data                   = data.cloudinit_config.configurer_user_data.rendered
   user_data_replace_on_change = true
 
   provisioner "remote-exec" {

@@ -13,17 +13,17 @@ output "ssh_args" {
   description = "Flags for the SSH command"
 }
 
-output "deployer_username_and_host" {
-  value       = local.deployer_username_and_host
-  description = "The deployer username and public IP address"
+output "configurer_username_and_host" {
+  value       = local.configurer_username_and_host
+  description = "The configurer username and public IP address"
 }
 
-output "deployer_ssh_command" {
-  value       = local.deployer_ssh_command
-  description = "An SSH command to access the deployer"
+output "configurer_ssh_command" {
+  value       = local.configurer_ssh_command
+  description = "An SSH command to access the configurer"
 }
 
-resource "local_file" "deployer_user_data_rendered" {
-  content  = base64decode(data.cloudinit_config.deployer_user_data.rendered)
-  filename = "${path.module}/logs/deployer_user_data_rendered"
+resource "local_file" "configurer_user_data_rendered" {
+  content  = base64decode(data.cloudinit_config.configurer_user_data.rendered)
+  filename = "${path.module}/logs/configurer_user_data_rendered"
 }

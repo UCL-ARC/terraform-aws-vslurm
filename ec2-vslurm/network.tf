@@ -1,6 +1,6 @@
 # Create a default security group that:
 # - permits all egress
-# - permits ingress ssh from the deployer
+# - permits ingress ssh from the local deployer
 # - permits all ingress from resources inside the default sg
 
 resource "aws_security_group" "default" {
