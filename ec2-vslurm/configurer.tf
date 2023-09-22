@@ -31,7 +31,7 @@ data "cloudinit_config" "configurer_user_data" {
                 aws_instance.server,
                 aws_instance.login
               ],
-              module.node[*]
+              module.compute_node[*]
             )
           }
         )
@@ -40,7 +40,7 @@ data "cloudinit_config" "configurer_user_data" {
           {
             server        = aws_instance.server,
             login         = aws_instance.login,
-            compute_nodes = module.node[*]
+            compute_nodes = module.compute_node[*]
           }
         )
         private_key_base64 = base64encode(tls_private_key.global_key.private_key_pem)
