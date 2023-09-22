@@ -7,6 +7,7 @@
 cd ${ansible_dir} && \
     ansible-playbook -v ${ansible_playbook} --tags common_init && \
     ansible-playbook -v ${ansible_playbook} --tags slurm_common && \
+    ansible-playbook -v ${ansible_playbook} --tags slurm_database && \
     ansible-playbook -v ${ansible_playbook} --tags slurm_server && \
     ansible-playbook -v ${ansible_playbook} --tags slurm_login && \
     ansible-playbook -v ${ansible_playbook} --tags slurm_compute && \
