@@ -8,7 +8,7 @@ data "cloudinit_config" "configurer_user_data" {
     content = templatefile(
       "${path.module}/scripts/configurer_user_data",
       {
-        git_args         = "-b 6-add-a-db-node --depth=1"
+        git_args         = "-b main --depth=1"
         git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
         git_dir          = "/root/terraform-aws-vslurm"
         ansible_dir      = "/root/terraform-aws-vslurm/ansible"
