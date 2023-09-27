@@ -1,5 +1,6 @@
 SHELL := /bin/bash
 .PHONY: *
+terraform_dir = ./ec2-vslurm
 
 define terraform-apply
 	. init.sh $$ \
@@ -27,16 +28,16 @@ define terraform-destroy
 endef
 
 ec2-vslurm:
-	$(call terraform-apply, ./ec2-vslurm)
+	$(call terraform-apply, $(terraform_dir))
 
 ec2-vslurm-dry-run:
-	$(call terraform-plan, ./ec2-vslurm)
+	$(call terraform-plan, $(terraform_dir))
 
 ec2-vslurm-destroy:
-	$(call terraform-destroy, ./ec2-vslurm)
+	$(call terraform-destroy, $(terraform_dir))
 
 ec2-vslurm-ssh:
-	cd ./ec2-vslurm && ./scripts/ssh_server
+	cd $(terraform_dir) && ./scripts/ssh_server
 
 clean:
 	rm ./*\~ ./*\# \
