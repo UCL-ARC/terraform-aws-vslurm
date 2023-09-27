@@ -34,9 +34,9 @@ data "cloudinit_config" "configurer_user_data" {
               ],
               module.compute_node[*]
             )
-            root_home = var.rhel9_root_home
           }
-        )
+        ),
+        root_home = var.rhel9_root_home
         ansible_hosts = templatefile(
           "${path.module}/scripts/ansible_hosts",
           {
