@@ -10,8 +10,8 @@ data "cloudinit_config" "configurer_user_data" {
       {
         git_args         = "-b main --depth=1"
         git_repo         = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
-        git_dir          = "/root/terraform-aws-vslurm"
-        ansible_dir      = "/root/terraform-aws-vslurm/ansible"
+        git_dir          = "${var.rhel9_root_home}/terraform-aws-vslurm"
+        ansible_dir      = "${var.rhel9_root_home}/terraform-aws-vslurm/ansible"
         ansible_playbook = "cluster.yaml"
       }
     )
@@ -34,6 +34,7 @@ data "cloudinit_config" "configurer_user_data" {
               ],
               module.compute_node[*]
             )
+            root_home = var.rhel9_root_home
           }
         )
         ansible_hosts = templatefile(
@@ -83,7 +84,7 @@ resource "aws_instance" "configurer" {
   }
 
   provisioner "local-exec" {
-    command    = "scp ${local.ssh_args} ${local.ec2_username}@${self.public_ip}:/var/log/cloud-init-output.log ${local.ec2_username}@${self.public_ip}:/var/log/cloud-init.log ${path.module}/logs"
+    command    = "scp ${local.ssh_args} ${local.ec2_username}@${self.public_ip}:${var.rhel9_log_dir}/cloud-init-output.log ${local.ec2_username}@${self.public_ip}:${var.rhel9_log_dir}/cloud-init.log ${path.module}/logs"
     on_failure = continue
   }
 }
