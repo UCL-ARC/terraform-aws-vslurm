@@ -48,6 +48,21 @@ data "cloudinit_config" "configurer_user_data" {
             compute_nodes = module.compute_node[*]
           }
         )
+        ansible_cluster_vars = templatefile(
+          "${path.module}/scripts/ansible_cluster_vars.yaml",
+          {
+            cluster_name      = var.aws_prefix,
+            mysql_socket      = local.mysql_socket,
+            log_dir           = var.rhel9_log_dir,
+            slurm_dir         = local.slurm_dir,
+            munge_dir         = local.munge_dir,
+            epel9_gpg_key_url = local.epel9_gpg_key_url,
+            epel9_rpm_url     = local.epel9_rpm_url,
+            username          = local.ec2_username,
+            user_home         = local.ec2_user_home,
+            root_home         = var.rhel9_root_home
+          }
+        )
         private_key_base64 = base64encode(tls_private_key.global_key.private_key_pem)
       }
     )

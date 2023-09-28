@@ -14,6 +14,9 @@ write_files:
   - path: ${root_home}/ansible_hosts
     content: |
       ${indent(6, ansible_hosts)}
+  - path: ${root_home}/ansible_cluster_vars.yaml
+    content: |
+      ${indent(6, ansible_cluster_vars)}
   - path: ${root_home}/.ssh/id_rsa
     permissions: '0o600'
     defer: true
