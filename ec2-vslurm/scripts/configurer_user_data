@@ -3,13 +3,13 @@
 /usr/bin/cat /root/cluster_hosts >> /etc/hosts
 
 export ANSIBLE_INVENTORY=${ansible_inventory}
-echo "export ANSIBLE_INVENTORY=${ansible_inventory}" >> /etc/profile.d/bashrc
+echo "export ANSIBLE_INVENTORY=${ansible_inventory}" >> /root/.bashrc
 export ANSIBLE_REMOTE_USER=${ansible_remote_user}
-echo "export ANSIBLE_REMOTE_USER=${ansible_remote_user}" >> /etc/profile.d/bashrc
+echo "export ANSIBLE_REMOTE_USER=${ansible_remote_user}" >> /root/.bashrc
 export ANSIBLE_BECOME=True
-echo "export ANSIBLE_BECOME=True" >> /etc/profile.d/bashrc
+echo "export ANSIBLE_BECOME=True" >> /root/.bashrc
 export ANSIBLE_HOST_KEY_CHECKING=False
-echo "export ANSIBLE_HOST_KEY_CHECKING=False" >> /etc/profile.d/bashrc
+echo "export ANSIBLE_HOST_KEY_CHECKING=False" >> /root/.bashrc
 
 /usr/bin/pip install --no-input ansible && \
     /usr/bin/git clone ${git_args} ${git_repo} ${git_dir}
