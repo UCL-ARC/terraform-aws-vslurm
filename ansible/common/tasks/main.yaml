@@ -1,4 +1,5 @@
 ---
+
 - name: Copy Cluster Hosts File
   copy:
     src: /etc/hosts
@@ -10,10 +11,10 @@
 
 - name: Copy RSA key
   copy:
-    src: /root/.ssh/id_rsa
-    dest: /home/ec2-user/.ssh/id_rsa
-    owner: ec2-user
-    group: ec2-user
+    src: "{{ cluster_vars.root_home }}/.ssh/id_rsa"
+    dest: "{{ cluster_vars.user_home }}/.ssh/id_rsa"
+    owner: "{{ cluster_vars.username }}"
+    group: "{{ cluster_vars.username }}"
     mode: 0700
   tags: common_init
 
@@ -28,7 +29,7 @@
 - name: Check the EPEL9 RPM Key
   rpm_key:
     state: present
-    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9
+    key: "{{ cluster_vars.epel9_gpg_key_url }}"
   tags: common_init
 
 - name: Common RPM Initialization List
@@ -36,7 +37,7 @@
     pkg_list:
       - vim
       - munge
-      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+      - "{{ cluster_vars.epel9_rpm_url }}"
   when:
     - abort is undefined
   tags: common_init

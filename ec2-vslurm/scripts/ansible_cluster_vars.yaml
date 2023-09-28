@@ -1,12 +1,13 @@
 ---
 
-cluster_name: "${cluster_name}"
-mysql_socket: "${mysql_socket}"
-log_dir: "${log_dir}"
-slurm_dir: "${slurm_dir}"
-munge_dir: "${munge_dir}"
-epel9_gpg_key_url: "${epel9_gpg_key_url}"
-epel9_rpm_url: "${epel9_rpm_url}"
-username: "${username}"
-user_home: "${user_home}"
-root_home: "${root_home}"
+cluster_vars:
+  cluster_name: "${cluster_name}"
+  mysql_socket: "${mysql_socket}"
+  log_dir: "${log_dir}"
+  slurm_dir: "${slurm_dir}"
+  munge_dir: "${munge_dir}"
+  epel9_gpg_key_url: "${epel9_gpg_key_url}"
+  epel9_rpm_url: "${epel9_rpm_url}"
+  username: "${username}"
+  user_home: "${user_home}"
+  root_home: "${root_home}"

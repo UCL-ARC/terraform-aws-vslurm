@@ -3,7 +3,7 @@
 - name: Slurm Database Configuration File
   copy:
     src: slurmdbd.conf
-    dest: /etc/slurm/slurmdbd.conf
+    dest: "{{ cluster_vars.slurm_dir }}/slurmdbd.conf"
     owner: root
     group: root
     mode: 0600
@@ -30,13 +30,13 @@
   mysql_db:
     name: slurm_acct_db
     state: present
-    login_unix_socket: /var/lib/mysql/mysql.sock
+    login_unix_socket: "{{ cluster_vars.mysql_socket }}"
 
 - name: Slurm MySQL User
   mysql_user:
     name: slurm
     host: server
-    login_unix_socket: /var/lib/mysql/mysql.sock
+    login_unix_socket: "{{ cluster_vars.mysql_socket }}"
     password: '*97C165CCACCAD8DFE21431AA259E3AF9A593C933'
     encrypted: yes
     priv: 'slurm_acct_db.*:ALL,GRANT'
@@ -46,8 +46,8 @@
 - name: Slurm MySQL User
   mysql_user:
     name: slurm
-    host: vslurm
-    login_unix_socket: /var/lib/mysql/mysql.sock
+    host: "{{ cluster_vars.cluster_name }}"
+    login_unix_socket: "{{ cluster_vars.mysql_socket }}"
     password: '*97C165CCACCAD8DFE21431AA259E3AF9A593C933'
     encrypted: yes
     priv: 'slurm_acct_db.*:ALL,GRANT'

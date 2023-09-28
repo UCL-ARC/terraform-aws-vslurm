@@ -1,15 +1,18 @@
 ---
 
 - hosts: all
+  vars_files: /root/ansible_cluster_vars.yaml
   roles:
     - { role: common, tags: common }
     - { role: slurm_common, tags: slurm_common }
 
 - hosts: d
+  vars_files: /root/ansible_cluster_vars.yaml
   roles:
     - { role: slurm_database, tags: slurm_database }
 
 - hosts: s
+  vars_files: /root/ansible_cluster_vars.yaml
   roles:
     - { role: slurm_server, tags: slurm_server }
 

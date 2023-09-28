@@ -18,7 +18,7 @@
 
 - name: Create Cluster
   command:
-    cmd: sacctmgr -i create cluster vslurm
+    cmd: "sacctmgr -i create cluster {{ cluster_vars.cluster_name }}"
   register: sacctmgr_cmd
   failed_when: sacctmgr_cmd.rc >= 2
   changed_when: sacctmgr_cmd.rc == 0
