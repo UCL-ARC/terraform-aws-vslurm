@@ -48,8 +48,8 @@ data "cloudinit_config" "configurer_user_data" {
             compute_nodes = module.compute_node[*]
           }
         )
-        ansible_cluster_vars = templatefile(
-          "${path.module}/scripts/ansible_cluster_vars.yaml",
+        ansible_variables = templatefile(
+          "${path.module}/scripts/ansible_variables.yaml",
           {
             cluster_name      = var.aws_prefix,
             mysql_socket      = local.mysql_socket,
