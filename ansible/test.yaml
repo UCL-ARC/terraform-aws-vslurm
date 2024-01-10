@@ -4,5 +4,5 @@
 
   tasks:
   - name: My name is
-    command: hostname
+    ansible.builtin.command: hostname
     remote_user: "{{ cluster_vars.username }}"

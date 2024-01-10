@@ -1,19 +1,19 @@
 ---
 
 - name: Slurm Compute RPM List
-  set_fact:
+  ansible.builtin.set_fact:
     pkg_list:
       - slurm-slurmd
       - slurm-pam_slurm
       - slurm-contribs
 
 - name: Slurm Compute RPM Install
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ pkg_list }}"
     state: installed
 
 - name: Slurm Service
-  service:
+  ansible.builtin.service:
     name: slurmd
     state: started
     enabled: yes

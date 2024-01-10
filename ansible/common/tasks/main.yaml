@@ -1,7 +1,7 @@
 ---
 
 - name: Copy Cluster Hosts File
-  copy:
+  ansible.builtin.copy:
     src: /etc/hosts
     dest: /etc/hosts
     owner: root
@@ -10,7 +10,7 @@
   tags: common_init
 
 - name: Copy RSA key
-  copy:
+  ansible.builtin.copy:
     src: "{{ cluster_vars.root_home }}/.ssh/id_rsa"
     dest: "{{ cluster_vars.user_home }}/.ssh/id_rsa"
     owner: "{{ cluster_vars.username }}"
@@ -18,22 +18,22 @@
     mode: 0700
   tags: common_init
 
-- set_fact: abort=true
+- ansible.builtin.set_fact: abort=true
 
 - name: Upgrade All Packages
-  dnf:
+  ansible.builtin.dnf:
     name: "*"
     state: latest
   tags: common_init
 
 - name: Check the EPEL9 RPM Key
-  rpm_key:
+  ansible.builtin.rpm_key:
     state: present
     key: "{{ cluster_vars.epel9_gpg_key_url }}"
   tags: common_init
 
 - name: Common RPM Initialization List
-  set_fact:
+  ansible.builtin.set_fact:
     pkg_list:
       - vim
       - munge
@@ -43,7 +43,7 @@
   tags: common_init
 
 - name: Install Common RPMs
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ pkg_list }}"
     state: installed
     allowerasing: true

@@ -1,7 +1,7 @@
 ---
 
 - name: Slurm Database Configuration File
-  copy:
+  ansible.builtin.copy:
     src: slurmdbd.conf
     dest: "{{ cluster_vars.slurm_dir }}/slurmdbd.conf"
     owner: root
@@ -9,31 +9,31 @@
     mode: 0600
 
 - name: Slurm Database RPM List
-  set_fact:
+  ansible.builtin.set_fact:
     pkg_list:
       - slurm-slurmdbd
       - mariadb-server
       - python3-PyMySQL
 
 - name: Slurm Database RPM Install
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ pkg_list }}"
     state: installed
 
 - name: MariaDB Service
-  service:
+  ansible.builtin.service:
     name: mariadb
     state: started
     enabled: yes
 
 - name: Slurm Account DB
-  mysql_db:
+  community.mysql.mysql_db:
     name: slurm_acct_db
     state: present
     login_unix_socket: "{{ cluster_vars.mysql_socket }}"
 
 - name: Slurm MySQL User
-  mysql_user:
+  community.mysql.mysql_user:
     name: slurm
     host: server
     login_unix_socket: "{{ cluster_vars.mysql_socket }}"
@@ -44,7 +44,7 @@
     update_password: always
 
 - name: Slurm MySQL User
-  mysql_user:
+  community.mysql.mysql_user:
     name: slurm
     host: "{{ cluster_vars.cluster_name }}"
     login_unix_socket: "{{ cluster_vars.mysql_socket }}"
@@ -55,7 +55,7 @@
     update_password: always
 
 - name: Slurm Database Service
-  service:
+  ansible.builtin.service:
     name: slurmdbd
     state: started
     enabled: yes

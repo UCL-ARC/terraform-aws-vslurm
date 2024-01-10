@@ -1,19 +1,19 @@
 ---
 
 - name: Munge Group
-  group:
+  ansible.builtin.group:
     name: munge
     gid: 201
     state: present
 
 - name: Slurm Group
-  group:
+  ansible.builtin.group:
     name: slurm
     gid: 202
     state: present
 
 - name: Munge User
-  user:
+  ansible.builtin.user:
     name: munge
     comment: ""
     uid: 201
@@ -23,7 +23,7 @@
     system: yes
 
 - name: Slurm User
-  user:
+  ansible.builtin.user:
     name: slurm
     comment: ""
     uid: 202
@@ -33,12 +33,12 @@
     system: yes
 
 - name: Create Munge Key
-  command: create-munge-key
+  ansible.builtin.command: create-munge-key
   args:
     creates: "{{ cluster_vars.munge_dir }}/munge.key"
 
 - name: Munge Directory
-  file:
+  ansible.builtin.file:
     path: "{{ cluster_vars.munge_dir }}"
     owner: munge
     group: munge
@@ -46,7 +46,7 @@
     mode: 0700
 
 - name: Secure Munge PRNG
-  file:
+  ansible.builtin.file:
     path: /var/lib/munge
     owner: munge
     group: munge
@@ -55,13 +55,13 @@
 
 - name: Fetch Munge Key
   run_once: true
-  fetch:
+  ansible.builtin.fetch:
     flat: true
     src: "{{ cluster_vars.munge_dir }}/munge.key"
     dest: "{{ role_path }}/files/"
 
 - name: Copy Munge Key to Cluster
-  copy:
+  ansible.builtin.copy:
     src: munge.key
     dest: "{{ cluster_vars.munge_dir }}/munge.key"
     owner: munge
@@ -69,7 +69,7 @@
     mode: 0400
 
 - name: Slurm Directory
-  file:
+  ansible.builtin.file:
     path: "{{ cluster_vars.slurm_dir }}"
     owner: root
     group: root
@@ -77,7 +77,7 @@
     mode: 0755
 
 - name: Slurm Configuration File
-  template:
+  ansible.builtin.template:
     src: slurm.conf
     dest: "{{ cluster_vars.slurm_dir }}/slurm.conf"
     owner: root
@@ -85,7 +85,7 @@
     mode: 0644
 
 - name: Slurm Log Directory
-  file:
+  ansible.builtin.file:
     path: "{{ cluster_vars.log_dir }}/slurm"
     owner: slurm
     group: slurm
@@ -93,7 +93,7 @@
     mode: 0755
 
 - name: Munge Log Directory
-  file:
+  ansible.builtin.file:
     path: "{{ cluster_vars.log_dir }}/munge"
     owner: munge
     group: munge
@@ -101,19 +101,19 @@
     mode: 0755
 
 - name: Slurm Common RPM List
-  set_fact:
+  ansible.builtin.set_fact:
     pkg_list:
       - slurm
       - slurm-perlapi
       - slurm-devel
 
 - name: Slurm Common RPM Install
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ pkg_list }}"
     state: installed
 
 - name: Start Munge Service
-  service:
+  ansible.builtin.service:
     name: munge
     state: started
     enabled: yes

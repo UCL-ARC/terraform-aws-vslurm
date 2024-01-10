@@ -1,11 +1,11 @@
 ---
 
 - name: Slurm Login RPM List
-  set_fact:
+  ansible.builtin.set_fact:
     pkg_list:
       - slurm-contribs
 
 - name: Slurm Login RPM Install
-  dnf:
+  ansible.builtin.dnf:
     name: "{{ pkg_list }}"
     state: installed
