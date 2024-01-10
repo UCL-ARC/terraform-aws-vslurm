@@ -3,7 +3,7 @@ data "cloudinit_config" "server_user_data" {
     filename     = "server_user_data"
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/scripts/server_user_data",
+      "${path.module}/templates/server_user_data",
       {
         nickname = "${var.aws_prefix}-server"
       }
@@ -13,7 +13,7 @@ data "cloudinit_config" "server_user_data" {
   part {
     filename     = "server_cloud_init.yaml"
     content_type = "text/cloud-config"
-    content      = file("${path.module}/scripts/server_cloud_init.yaml")
+    content      = file("${path.module}/templates/server_cloud_init.yaml")
   }
 }
 

@@ -6,7 +6,7 @@ data "cloudinit_config" "configurer_user_data" {
     filename     = "configurer_user_data"
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/scripts/configurer_user_data",
+      "${path.module}/templates/configurer_user_data",
       {
         git_args            = "-b main --depth=1"
         git_repo            = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
@@ -23,10 +23,10 @@ data "cloudinit_config" "configurer_user_data" {
     filename     = "configurer_cloud_init.yaml"
     content_type = "text/cloud-config"
     content = templatefile(
-      "${path.module}/scripts/configurer_cloud_init.yaml",
+      "${path.module}/templates/configurer_cloud_init.yaml",
       {
         cluster_hosts = templatefile(
-          "${path.module}/scripts/cluster_hosts",
+          "${path.module}/templates/cluster_hosts",
           {
             nodes = concat(
               [
@@ -40,7 +40,7 @@ data "cloudinit_config" "configurer_user_data" {
         ),
         root_home = var.rhel9_root_home
         ansible_hosts = templatefile(
-          "${path.module}/scripts/ansible_hosts",
+          "${path.module}/templates/ansible_hosts",
           {
             server        = aws_instance.server,
             database      = aws_instance.database,
@@ -49,7 +49,7 @@ data "cloudinit_config" "configurer_user_data" {
           }
         )
         ansible_variables = templatefile(
-          "${path.module}/scripts/ansible_variables.yaml",
+          "${path.module}/templates/ansible_variables.yaml",
           {
             cluster_name      = var.aws_prefix,
             mysql_socket      = local.mysql_socket,

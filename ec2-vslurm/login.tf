@@ -3,7 +3,7 @@ data "cloudinit_config" "login_user_data" {
     filename     = "login_user_data"
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/scripts/login_user_data",
+      "${path.module}/templates/login_user_data",
       {
         nickname = "${var.aws_prefix}-login"
       }
@@ -13,7 +13,7 @@ data "cloudinit_config" "login_user_data" {
   part {
     filename     = "login_cloud_init.yaml"
     content_type = "text/cloud-config"
-    content      = file("${path.module}/scripts/login_cloud_init.yaml")
+    content      = file("${path.module}/templates/login_cloud_init.yaml")
   }
 }
 

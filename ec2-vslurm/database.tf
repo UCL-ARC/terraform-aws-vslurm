@@ -3,7 +3,7 @@ data "cloudinit_config" "database_user_data" {
     filename     = "database_user_data"
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/scripts/database_user_data",
+      "${path.module}/templates/database_user_data",
       {
         nickname = "${var.aws_prefix}-database"
       }
@@ -13,7 +13,7 @@ data "cloudinit_config" "database_user_data" {
   part {
     filename     = "database_cloud_init.yaml"
     content_type = "text/cloud-config"
-    content      = file("${path.module}/scripts/database_cloud_init.yaml")
+    content      = file("${path.module}/templates/database_cloud_init.yaml")
   }
 }
 
