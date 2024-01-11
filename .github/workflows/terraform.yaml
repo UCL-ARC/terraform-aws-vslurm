@@ -20,7 +20,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./ec2-vslurm
+        working-directory: ./vslurm
 
     steps:
       # Checkout the repository to the GitHub Actions runner

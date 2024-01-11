@@ -1,4 +1,4 @@
-# terraform-aws-vslurm/ec2-vslurm
+# terraform-aws-vslurm/vslurm
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
