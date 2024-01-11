@@ -6,7 +6,7 @@ provider "aws" {
 locals {
   ec2_username                 = "ec2-user"
   ec2_user_home                = "/home/${local.ec2_username}"
-  ssh_key_name                 = "ec2_id_rsa"
+  ssh_key_name                 = "${var.aws_prefix}_id_rsa"
   server_username_and_host     = "${local.ec2_username}@${aws_instance.server.public_ip}"
   configurer_username_and_host = "${local.ec2_username}@${aws_instance.configurer.public_ip}"
   ssh_args                     = "-i ${local_sensitive_file.ssh_private_key_pem.filename} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
