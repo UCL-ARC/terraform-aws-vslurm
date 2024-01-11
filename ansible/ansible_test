@@ -1,1 +1,1 @@
-ansible-playbook -v test.yaml
+ansible-playbook -v test.yaml --extra-vars="@/root/ansible_variables.yaml"
