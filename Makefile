@@ -42,4 +42,4 @@ vslurm-ssh:
 clean:
 	rm ./*\~ ./*\# \
 		./vslurm/*\~ ./vslurm/*\# \
-		./vslurm/node/*\~ ./vslurm/node/*\#
+		./vslurm/compute_node/*\~ ./vslurm/compute_node/*\#
