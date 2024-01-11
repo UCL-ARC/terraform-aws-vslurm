@@ -37,7 +37,7 @@ vslurm-destroy:
 	$(call terraform-destroy, $(terraform_dir))
 
 vslurm-ssh:
-	cd $(terraform_dir) && ./scripts/ssh_server
+	cd $(terraform_dir) && ../server_ssh.sh
 
 clean:
 	rm ./*\~ ./*\# \
