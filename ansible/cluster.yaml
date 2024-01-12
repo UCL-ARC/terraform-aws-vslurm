@@ -11,17 +11,25 @@
   roles:
     - { role: slurm_database, tags: slurm_database }
 
+- hosts: n
+  vars_files: /root/ansible_variables.yaml
+  roles:
+    - { role: nfs_server, tags: nfs_server }
+
 - hosts: s
   vars_files: /root/ansible_variables.yaml
   roles:
+    - { role: nfs_client, tags: nfs_client }
     - { role: slurm_server, tags: slurm_server }
 
 - hosts: c
   vars_files: /root/ansible_variables.yaml
   roles:
+    - { role: nfs_client, tags: nfs_client }
     - { role: slurm_compute, tags: slurm_compute }
 
 - hosts: l
   vars_files: /root/ansible_variables.yaml
   roles:
+    - { role: nfs_client, tags: nfs_client }
     - { role: slurm_login, tags: slurm_login }

@@ -1,0 +1,47 @@
+---
+
+- name: NFS Shared Directory
+  ansible.builtin.file:
+    path: /shared
+    owner: root
+    group: root
+    state: directory
+    mode: 0755
+
+- name: NFS Home Directory
+  ansible.builtin.file:
+    path: /home
+    owner: root
+    group: root
+    state: directory
+    mode: 0755
+
+- name: NFS Export Configuration File
+  ansible.builtin.template:
+    src: exports
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+
+- name: NFS Server RPM List
+  ansible.builtin.set_fact:
+    pkg_list:
+      - nfs-utils
+
+- name: NFS Server RPM Install
+  ansible.builtin.dnf:
+    name: "{{ pkg_list }}"
+    state: installed
+
+- name: NFS rpcbind Service
+  ansible.builtin.service:
+    name: rpcbind
+    state: started
+    enabled: yes
+
+- name: NFS nfs-server Service
+  ansible.builtin.service:
+    name: nfs-server
+    state: started
+    enabled: yes

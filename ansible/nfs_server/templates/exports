@@ -1,0 +1,12 @@
+{% for host in groups['s'] %}
+/shared {{ hostvars[host]['ansible_ssh_host'] }}(ro,sync,root_squash)
+/home {{ hostvars[host]['ansible_ssh_host'] }}(rw,sync,no_root_squash,no_subtree_check)
+{% endfor %}
+{% for host in groups['c'] %}
+/shared {{ hostvars[host]['ansible_ssh_host'] }}(ro,sync,root_squash)
+/home {{ hostvars[host]['ansible_ssh_host'] }}(rw,sync,no_root_squash,no_subtree_check)
+{% endfor %}
+{% for host in groups['l'] %}
+/shared {{ hostvars[host]['ansible_ssh_host'] }}(ro,sync,root_squash)
+/home {{ hostvars[host]['ansible_ssh_host'] }}(rw,sync,no_root_squash,no_subtree_check)
+{% endfor %}
