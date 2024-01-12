@@ -10,7 +10,6 @@ No requirements.
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
-| <a name="provider_cloudinit"></a> [cloudinit](#provider\_cloudinit) | n/a |
 
 ## Modules
 
@@ -21,7 +20,6 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_instance.node](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
-| [cloudinit_config.node_user_data](https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config) | data source |
 
 ## Inputs
 
@@ -34,6 +32,7 @@ No modules.
 | <a name="input_node_instance_type"></a> [node\_instance\_type](#input\_node\_instance\_type) | AWS instance type for the compute node instance | `string` | `"t2.micro"` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | Security Group IDs to be applied to the compute node instance | `list(string)` | n/a | yes |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Subnet ID of the subnet that the compute node instance will be deployed in | `string` | n/a | yes |
+| <a name="input_user_data_rendered"></a> [user\_data\_rendered](#input\_user\_data\_rendered) | Cloud init user data for the compute node instance | `string` | n/a | yes |
 
 ## Outputs
 
