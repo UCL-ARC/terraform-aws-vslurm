@@ -1,3 +1,0 @@
-%{ for node in nodes ~}
-${node.private_ip} ${node.private_dns} ${node.tags_all.host_alias}
-%{ endfor ~}

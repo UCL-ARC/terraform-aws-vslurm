@@ -8,9 +8,6 @@ packages:
   - python3-pip
 
 write_files:
-  - path: ${root_home}/cluster_hosts
-    content: |
-      ${indent(6, cluster_hosts)}
   - path: ${root_home}/ansible_hosts
     content: |
       ${indent(6, ansible_hosts)}

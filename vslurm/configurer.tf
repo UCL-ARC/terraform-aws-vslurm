@@ -15,6 +15,14 @@ data "cloudinit_config" "cloud_init_configurer" {
         ansible_playbook    = "cluster.yaml"
         ansible_inventory   = "${var.rhel9_root_home}/ansible_hosts"
         ansible_remote_user = local.ec2_username
+        nodes = concat(
+          [
+            aws_instance.server,
+            aws_instance.database,
+            aws_instance.login
+          ],
+          module.compute_node[*]
+        )
       }
     )
   }
@@ -25,19 +33,6 @@ data "cloudinit_config" "cloud_init_configurer" {
     content = templatefile(
       "${path.module}/templates/cloud_init_configurer.yaml",
       {
-        cluster_hosts = templatefile(
-          "${path.module}/templates/cluster_hosts",
-          {
-            nodes = concat(
-              [
-                aws_instance.server,
-                aws_instance.database,
-                aws_instance.login
-              ],
-              module.compute_node[*]
-            )
-          }
-        ),
         root_home = var.rhel9_root_home
         ansible_hosts = templatefile(
           "${path.module}/templates/ansible_hosts",

@@ -1,6 +1,9 @@
 #!/bin/bash -x
 
-/usr/bin/cat /root/cluster_hosts >> /etc/hosts
+# write hosts file
+%{ for node in nodes ~}
+echo ${node.private_ip} ${node.private_dns} ${node.tags_all.host_alias} >> /etc/hosts
+%{ endfor ~}
 
 export ANSIBLE_INVENTORY=${ansible_inventory}
 echo "export ANSIBLE_INVENTORY=${ansible_inventory}" >> /root/.bashrc
