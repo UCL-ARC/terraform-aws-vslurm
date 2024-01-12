@@ -1,9 +1,9 @@
-data "cloudinit_config" "login_user_data" {
+data "cloudinit_config" "cloud_init_login" {
   part {
-    filename     = "login_user_data"
+    filename     = "cloud_init"
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/templates/login_user_data",
+      "${path.module}/templates/cloud_init",
       {
         nickname = "${var.aws_prefix}-login"
       }
@@ -11,9 +11,9 @@ data "cloudinit_config" "login_user_data" {
   }
 
   part {
-    filename     = "login_cloud_init.yaml"
+    filename     = "cloud_init.yaml"
     content_type = "text/cloud-config"
-    content      = file("${path.module}/templates/login_cloud_init.yaml")
+    content      = file("${path.module}/templates/cloud_init.yaml")
   }
 }
 
@@ -25,7 +25,7 @@ resource "aws_instance" "login" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [aws_security_group.default.id]
 
-  user_data                   = data.cloudinit_config.login_user_data.rendered
+  user_data                   = data.cloudinit_config.cloud_init_login.rendered
   user_data_replace_on_change = true
 
   tags = {

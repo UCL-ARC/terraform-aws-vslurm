@@ -1,12 +1,12 @@
 
-data "cloudinit_config" "configurer_user_data" {
+data "cloudinit_config" "cloud_init_configurer" {
   gzip = false
 
   part {
-    filename     = "configurer_user_data"
+    filename     = "cloud_init_configurer"
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/templates/configurer_user_data",
+      "${path.module}/templates/cloud_init_configurer",
       {
         git_args            = "-b main --depth=1"
         git_repo            = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
@@ -20,10 +20,10 @@ data "cloudinit_config" "configurer_user_data" {
   }
 
   part {
-    filename     = "configurer_cloud_init.yaml"
+    filename     = "cloud_init_configurer.yaml"
     content_type = "text/cloud-config"
     content = templatefile(
-      "${path.module}/templates/configurer_cloud_init.yaml",
+      "${path.module}/templates/cloud_init_configurer.yaml",
       {
         cluster_hosts = templatefile(
           "${path.module}/templates/cluster_hosts",
@@ -82,7 +82,7 @@ resource "aws_instance" "configurer" {
     Name = "${var.aws_prefix}-configurer"
   }
 
-  user_data                   = data.cloudinit_config.configurer_user_data.rendered
+  user_data                   = data.cloudinit_config.cloud_init_configurer.rendered
   user_data_replace_on_change = true
 
   provisioner "remote-exec" {
