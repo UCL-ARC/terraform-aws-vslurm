@@ -25,7 +25,7 @@ resource "aws_instance" "database" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [aws_security_group.default.id]
 
-  user_data                   = data.cloudinit_config_database.cloud_init.rendered
+  user_data                   = data.cloudinit_config.cloud_init_database.rendered
   user_data_replace_on_change = true
 
   tags = {

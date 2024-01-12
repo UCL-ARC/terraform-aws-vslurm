@@ -33,3 +33,8 @@ variable "node_instance_type" {
   default     = "t2.micro"
   description = "AWS instance type for the compute node instance"
 }
+
+variable "user_data_rendered" {
+  type        = string
+  description = "Cloud init user data for the compute node instance"
+}
