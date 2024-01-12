@@ -19,7 +19,8 @@ data "cloudinit_config" "cloud_init_configurer" {
           [
             aws_instance.server,
             aws_instance.database,
-            aws_instance.login
+            aws_instance.login,
+            aws_instance.nfs_server
           ],
           module.compute_node[*]
         )
@@ -40,6 +41,7 @@ data "cloudinit_config" "cloud_init_configurer" {
             server        = aws_instance.server,
             database      = aws_instance.database,
             login         = aws_instance.login,
+            nfs_server    = aws_instance.nfs_server,
             compute_nodes = module.compute_node[*]
           }
         )
