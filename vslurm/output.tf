@@ -23,7 +23,7 @@ output "configurer_ssh_command" {
   description = "An SSH command to access the configurer EC2 instance"
 }
 
-resource "local_file" "cloud_init_configurer_rendered" {
-  content  = base64decode(data.cloudinit_config.cloud_init_configurer.rendered)
-  filename = "${path.module}/logs/cloud_init_configurer_rendered"
+resource "local_file" "cloudinit_configurer_rendered" {
+  content  = base64decode(data.cloudinit_config.cloudinit_configurer.rendered)
+  filename = "${path.module}/logs/cloudinit_configurer_rendered"
 }

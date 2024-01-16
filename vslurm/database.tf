@@ -1,9 +1,9 @@
-data "cloudinit_config" "cloud_init_database" {
+data "cloudinit_config" "cloudinit_database" {
   part {
-    filename     = "cloud_init"
+    filename     = "cloudinit"
     content_type = "text/x-shellscript"
     content = templatefile(
-      "${path.module}/templates/cloud_init",
+      "${path.module}/templates/cloudinit",
       {
         nickname = "${var.aws_prefix}-database"
       }
@@ -11,9 +11,9 @@ data "cloudinit_config" "cloud_init_database" {
   }
 
   part {
-    filename     = "cloud_init.yaml"
+    filename     = "cloudinit.yaml"
     content_type = "text/cloud-config"
-    content      = file("${path.module}/templates/cloud_init.yaml")
+    content      = file("${path.module}/templates/cloudinit.yaml")
   }
 }
 
@@ -25,7 +25,7 @@ resource "aws_instance" "database" {
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [aws_security_group.default.id]
 
-  user_data                   = data.cloudinit_config.cloud_init_database.rendered
+  user_data                   = data.cloudinit_config.cloudinit_database.rendered
   user_data_replace_on_change = true
 
   tags = {
