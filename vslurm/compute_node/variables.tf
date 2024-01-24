@@ -18,9 +18,9 @@ variable "security_group_ids" {
   description = "Security Group IDs to be applied to the compute node instance"
 }
 
-variable "index" {
-  type        = number
-  description = "Integer index of this node in the cluster"
+variable "node_name" {
+  type        = string
+  description = "Unique identifier of this node in the cluster"
 }
 
 variable "key_name" {

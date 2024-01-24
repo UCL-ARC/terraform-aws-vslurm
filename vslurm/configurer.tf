@@ -22,7 +22,7 @@ data "cloudinit_config" "cloudinit_configurer" {
             aws_instance.login,
             aws_instance.nfs_server
           ],
-          module.compute_node[*]
+          [for key, value in module.compute_node : value]
         )
       }
     )
@@ -42,7 +42,7 @@ data "cloudinit_config" "cloudinit_configurer" {
             database      = aws_instance.database,
             login         = aws_instance.login,
             nfs_server    = aws_instance.nfs_server,
-            compute_nodes = module.compute_node[*]
+            compute_nodes = [for key, value in module.compute_node : value]
           }
         )
         ansible_variables = templatefile(

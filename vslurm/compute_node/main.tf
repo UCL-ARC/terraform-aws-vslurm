@@ -19,7 +19,7 @@ resource "aws_instance" "node" {
   user_data_replace_on_change = true
 
   tags = {
-    Name       = "${var.aws_prefix}-c${var.index + 1}"
-    host_alias = "c${var.index + 1}"
+    Name       = "${var.aws_prefix}-${var.node_name}"
+    host_alias = var.node_name
   }
 }
