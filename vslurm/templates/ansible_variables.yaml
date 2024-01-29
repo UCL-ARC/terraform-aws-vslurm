@@ -11,3 +11,8 @@ cluster_vars:
   username: "${username}"
   user_home: "${user_home}"
   root_home: "${root_home}"
+
+proxy_env:
+  NO_PROXY: ""
+  http_proxy: ""
+  https_proxy: ""

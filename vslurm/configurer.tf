@@ -9,9 +9,9 @@ data "cloudinit_config" "cloudinit_configurer" {
       "${path.module}/templates/cloudinit_configurer",
       {
         git_args            = "-b main --depth=1"
-        git_repo            = "https://github.com/UCL-ARC/terraform-aws-vslurm.git"
-        git_dir             = "${var.rhel9_root_home}/terraform-aws-vslurm"
-        ansible_dir         = "${var.rhel9_root_home}/terraform-aws-vslurm/ansible"
+        git_repo            = "https://github.com/UCL-ARC/ansible-vslurm.git"
+        git_dir             = "${var.rhel9_root_home}/ansible-vslurm"
+        ansible_dir         = "${var.rhel9_root_home}/ansible-vslurm"
         ansible_playbook    = "cluster.yaml"
         ansible_inventory   = "${var.rhel9_root_home}/ansible_hosts"
         ansible_remote_user = local.ec2_username
