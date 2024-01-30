@@ -1,4 +1,4 @@
-variable "aws_prefix" {
+variable "app_prefix" {
   type        = string
   description = "Prefix for the compute node AWS resources"
 }
