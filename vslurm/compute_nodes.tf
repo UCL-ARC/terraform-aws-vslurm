@@ -13,13 +13,13 @@ module "compute_node" {
   for_each = toset(local.compute_nodes["basic"])
 
   source             = "./compute_node"
-  ami                = var.rhel9_ami_id
   app_prefix         = var.app_prefix
-  security_group_ids = [aws_security_group.default.id, aws_security_group.node.id]
-  subnet_id          = var.subnet_id
   node_name          = each.value
   key_name           = aws_key_pair.ssh.key_name
+  subnet_id          = var.subnet_id
+  security_group_ids = [aws_security_group.default.id, aws_security_group.node.id]
   node_instance_type = var.instance_type
+  ami                = var.rhel9_ami_id
   user_data_rendered = data.cloudinit_config.cloudinit_compute_node.rendered
 }
 
