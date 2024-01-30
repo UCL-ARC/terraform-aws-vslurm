@@ -8,13 +8,13 @@ data "cloudinit_config" "cloudinit_configurer" {
     content = templatefile(
       "${path.module}/templates/cloudinit_configurer",
       {
-        git_args            = "-b main --depth=1"
-        git_repo            = "https://github.com/UCL-ARC/ansible-vslurm.git"
+        git_args            = var.git_args
+        git_repo            = var.git_repo_ansible
         git_dir             = "${var.rhel9_root_home}/ansible-vslurm"
         ansible_dir         = "${var.rhel9_root_home}/ansible-vslurm"
         ansible_playbook    = "cluster.yaml"
         ansible_inventory   = "${var.rhel9_root_home}/ansible_hosts"
-        ansible_remote_user = local.ec2_username
+        ansible_remote_user = var.username
         nodes = concat(
           [
             aws_instance.server,
@@ -48,15 +48,15 @@ data "cloudinit_config" "cloudinit_configurer" {
         ansible_variables = templatefile(
           "${path.module}/templates/ansible_variables.yaml",
           {
-            cluster_name      = var.aws_prefix,
+            cluster_name      = var.app_prefix,
             mysql_socket      = local.mysql_socket,
             log_dir           = var.rhel9_log_dir,
             slurm_dir         = local.slurm_dir,
             munge_dir         = local.munge_dir,
-            epel9_gpg_key_url = local.epel9_gpg_key_url,
-            epel9_rpm_url     = local.epel9_rpm_url,
-            username          = local.ec2_username,
-            user_home         = local.ec2_user_home,
+            epel9_gpg_key_url = var.epel9_gpg_key_url,
+            epel9_rpm_url     = var.epel9_rpm_url,
+            username          = var.username,
+            user_home         = local.user_home,
             root_home         = var.rhel9_root_home
           }
         )
@@ -76,7 +76,7 @@ resource "aws_instance" "configurer" {
   vpc_security_group_ids = [aws_security_group.default.id]
 
   tags = {
-    Name = "${var.aws_prefix}-configurer"
+    Name = "${var.app_prefix}-configurer"
   }
 
   user_data                   = data.cloudinit_config.cloudinit_configurer.rendered
@@ -86,7 +86,7 @@ resource "aws_instance" "configurer" {
     connection {
       type        = "ssh"
       host        = self.public_ip
-      user        = local.ec2_username
+      user        = var.username
       private_key = tls_private_key.global_key.private_key_pem
     }
 
@@ -98,7 +98,7 @@ resource "aws_instance" "configurer" {
   }
 
   provisioner "local-exec" {
-    command    = "scp ${local.ssh_args} ${local.ec2_username}@${self.public_ip}:${var.rhel9_log_dir}/cloud-init-output.log ${local.ec2_username}@${self.public_ip}:${var.rhel9_log_dir}/cloud-init.log ${path.module}/logs"
+    command    = "scp ${local.ssh_args} ${var.username}@${self.public_ip}:${var.rhel9_log_dir}/cloud-init-output.log ${var.username}@${self.public_ip}:${var.rhel9_log_dir}/cloud-init.log ${path.module}/logs"
     on_failure = continue
   }
 }

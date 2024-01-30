@@ -5,7 +5,7 @@ data "cloudinit_config" "cloudinit_nfs_server" {
     content = templatefile(
       "${path.module}/templates/cloudinit",
       {
-        nickname = "${var.aws_prefix}-nfs-server"
+        nickname = "${var.app_prefix}-nfs-server"
       }
     )
   }
@@ -29,7 +29,7 @@ resource "aws_instance" "nfs_server" {
   user_data_replace_on_change = true
 
   tags = {
-    Name       = "${var.aws_prefix}-nfs-server"
+    Name       = "${var.app_prefix}-nfs-server"
     host_alias = "nfs-server"
   }
 }

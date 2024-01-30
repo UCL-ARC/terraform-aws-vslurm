@@ -1,7 +1,13 @@
-variable "aws_prefix" {
+variable "app_prefix" {
   type        = string
   default     = "vslurm"
   description = "Prefix to use when naming AWS resources"
+}
+
+variable "username" {
+  type        = string
+  default     = "ec2-user"
+  description = "Username for ssh connections"
 }
 
 variable "aws_region" {
@@ -32,6 +38,18 @@ variable "instance_type" {
   description = "AWS instance type for the instances"
 }
 
+variable "epel9_gpg_key_url" {
+  type        = string
+  default     = "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"
+  description = "URL for the EPEL9 GPG key"
+}
+
+variable "epel9_rpm_url" {
+  type        = string
+  default     = "https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"
+  description = "URL for the EPEL9 RPM repository"
+}
+
 variable "node_count" {
   type        = number
   default     = 2
@@ -46,4 +64,16 @@ variable "subnet_id" {
 variable "vpc_id" {
   type        = string
   description = "AWS VPC ID for the VPC that the subnet is deployed in"
+}
+
+variable "git_repo_ansible" {
+  type        = string
+  default     = "https://github.com/UCL-ARC/ansible-vslurm.git"
+  description = "Github repository URL"
+}
+
+variable "git_args" {
+  type        = string
+  default     = "-b main --depth 1"
+  description = "Options provided to git clone"
 }

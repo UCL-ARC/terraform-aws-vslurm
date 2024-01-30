@@ -5,7 +5,7 @@ data "cloudinit_config" "cloudinit_database" {
     content = templatefile(
       "${path.module}/templates/cloudinit",
       {
-        nickname = "${var.aws_prefix}-database"
+        nickname = "${var.app_prefix}-database"
       }
     )
   }
@@ -29,7 +29,7 @@ resource "aws_instance" "database" {
   user_data_replace_on_change = true
 
   tags = {
-    Name       = "${var.aws_prefix}-database"
+    Name       = "${var.app_prefix}-database"
     host_alias = "database"
   }
 }

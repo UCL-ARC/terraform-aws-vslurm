@@ -5,7 +5,7 @@ data "cloudinit_config" "cloudinit_login" {
     content = templatefile(
       "${path.module}/templates/cloudinit",
       {
-        nickname = "${var.aws_prefix}-login"
+        nickname = "${var.app_prefix}-login"
       }
     )
   }
@@ -29,7 +29,7 @@ resource "aws_instance" "login" {
   user_data_replace_on_change = true
 
   tags = {
-    Name       = "${var.aws_prefix}-login"
+    Name       = "${var.app_prefix}-login"
     host_alias = "login"
   }
 }

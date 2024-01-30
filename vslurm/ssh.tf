@@ -15,6 +15,6 @@ resource "local_file" "ssh_public_key_openssh" {
 }
 
 resource "aws_key_pair" "ssh" {
-  key_name_prefix = var.aws_prefix
+  key_name_prefix = var.app_prefix
   public_key      = tls_private_key.global_key.public_key_openssh
 }

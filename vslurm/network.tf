@@ -4,7 +4,7 @@
 # - permits all ingress from resources inside the default sg
 
 resource "aws_security_group" "default" {
-  name        = "${var.aws_prefix}-default"
+  name        = "${var.app_prefix}-default"
   description = "Default security group"
   vpc_id      = var.vpc_id
 }
@@ -39,7 +39,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_self" {
 # right now the nodes are in a public subnet
 # but they should probably go to a private instead
 resource "aws_security_group" "node" {
-  name        = "${var.aws_prefix}-node"
+  name        = "${var.app_prefix}-node"
   description = "Security group for node networking"
   vpc_id      = var.vpc_id
 }

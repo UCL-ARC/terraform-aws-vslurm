@@ -14,7 +14,7 @@ module "compute_node" {
 
   source             = "./compute_node"
   ami                = var.rhel9_ami_id
-  aws_prefix         = var.aws_prefix
+  app_prefix         = var.app_prefix
   security_group_ids = [aws_security_group.default.id, aws_security_group.node.id]
   subnet_id          = var.subnet_id
   node_name          = each.value
@@ -30,7 +30,7 @@ data "cloudinit_config" "cloudinit_compute_node" {
     content = templatefile(
       "${path.module}/templates/cloudinit",
       {
-        nickname = "${var.aws_prefix}-node-basic" # todo: this can be fixed when i switch from count to foreach
+        nickname = "${var.app_prefix}-node-basic" # todo: this can be fixed when i switch from count to foreach
       }
     )
   }
