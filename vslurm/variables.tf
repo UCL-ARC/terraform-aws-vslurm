@@ -42,7 +42,7 @@ variable "rhel9_log_dir" {
 
 variable "git_repo_ansible" {
   type        = string
-  default     = "https://github.com/UCL-ARC/ansible-vslurm.git"
+  default     = "https://github.com/UCL-ARC/ansible-vslurm-config.git"
   description = "Github repository URL"
 }
 
