@@ -6,7 +6,7 @@
 resource "aws_security_group" "default" {
   name        = "${var.app_prefix}-default"
   description = "Default security group"
-  vpc_id      = var.vpc_id
+  vpc_id      = data.aws_vpc.vpc.id
 }
 
 resource "aws_vpc_security_group_egress_rule" "all_egress" {
@@ -41,7 +41,7 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_self" {
 resource "aws_security_group" "node" {
   name        = "${var.app_prefix}-node"
   description = "Security group for node networking"
-  vpc_id      = var.vpc_id
+  vpc_id      = data.aws_vpc.vpc.id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ingress_internal" {

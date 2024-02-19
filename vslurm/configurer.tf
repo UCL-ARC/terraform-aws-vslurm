@@ -68,11 +68,11 @@ data "cloudinit_config" "cloudinit_configurer" {
 
 
 resource "aws_instance" "configurer" {
-  ami           = var.rhel9_ami_id
+  ami           = data.aws_ami.rhel9.id
   instance_type = var.instance_type
   key_name      = aws_key_pair.ssh.key_name
 
-  subnet_id              = var.subnet_id
+  subnet_id              = data.aws_subnet.subnet.id
   vpc_security_group_ids = [aws_security_group.default.id]
 
   tags = {

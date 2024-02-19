@@ -57,9 +57,10 @@ variable "aws_region" {
   description = "AWS region to deploy the instances in"
 }
 
-variable "rhel9_ami_id" {
+variable "rhel9_ami_name_pattern" {
   type        = string
-  description = "RHEL9 AMI ID for the instances"
+  default     = "RHEL-9.2.0*"
+  description = "RHEL9 AMI name pattern to match on for the instances"
 }
 
 variable "instance_type" {
@@ -68,12 +69,12 @@ variable "instance_type" {
   description = "AWS instance type for the instances"
 }
 
-variable "subnet_id" {
+variable "subnet_name" {
   type        = string
-  description = "AWS subnet ID for the subnet to deploy the instances in"
+  description = "Name of the AWS subnet to deploy the instances in"
 }
 
-variable "vpc_id" {
+variable "vpc_name" {
   type        = string
-  description = "AWS VPC ID for the VPC that the subnet is deployed in"
+  description = "Name of the AWS VPC that the instances will be deployed in"
 }
