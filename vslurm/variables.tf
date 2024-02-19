@@ -57,9 +57,10 @@ variable "aws_region" {
   description = "AWS region to deploy the instances in"
 }
 
-variable "rhel9_ami_id" {
+variable "rhel9_ami_name_pattern" {
   type        = string
-  description = "RHEL9 AMI ID for the instances"
+  default     = "RHEL-9.2.0*"
+  description = "RHEL9 AMI name pattern to match on for the instances"
 }
 
 variable "instance_type" {

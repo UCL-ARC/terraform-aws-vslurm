@@ -18,7 +18,7 @@ data "cloudinit_config" "cloudinit_nfs_server" {
 }
 
 resource "aws_instance" "nfs_server" {
-  ami           = var.rhel9_ami_id
+  ami           = data.aws_ami.rhel9.id
   instance_type = var.instance_type
   key_name      = aws_key_pair.ssh.key_name
 

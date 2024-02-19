@@ -19,7 +19,7 @@ module "compute_node" {
   subnet_id          = data.aws_subnet.subnet.id
   security_group_ids = [aws_security_group.default.id, aws_security_group.node.id]
   node_instance_type = var.instance_type
-  ami                = var.rhel9_ami_id
+  ami                = data.aws_ami.rhel9.id
   user_data_rendered = data.cloudinit_config.cloudinit_compute_node.rendered
 }
 
