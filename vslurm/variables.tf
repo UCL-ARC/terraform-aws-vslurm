@@ -73,7 +73,7 @@ variable "subnet_id" {
   description = "AWS subnet ID for the subnet to deploy the instances in"
 }
 
-variable "vpc_id" {
+variable "vpc_name" {
   type        = string
-  description = "AWS VPC ID for the VPC that the subnet is deployed in"
+  description = "Name of the AWS VPC that the instances will be deployed in"
 }

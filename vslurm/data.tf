@@ -1,6 +1,9 @@
 # Get data about the VPC
 data "aws_vpc" "vpc" {
-  id = var.vpc_id
+  filter {
+    name   = "tag:Name"
+    values = [var.vpc_name]
+  }
 }
 
 # Get the local deployer's IP address
