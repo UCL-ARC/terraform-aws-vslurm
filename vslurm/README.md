@@ -49,6 +49,8 @@
 | [local_file.ssh_public_key_openssh](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_sensitive_file.ssh_private_key_pem](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/sensitive_file) | resource |
 | [tls_private_key.global_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
+| [aws_ami.rhel9](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_subnet.subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
 | [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 | [cloudinit_config.cloudinit_compute_node](https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config) | data source |
 | [cloudinit_config.cloudinit_configurer](https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config) | data source |
@@ -62,25 +64,27 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aws_prefix"></a> [aws\_prefix](#input\_aws\_prefix) | Prefix to use when naming AWS resources | `string` | `"vslurm"` | no |
+| <a name="input_app_prefix"></a> [app\_prefix](#input\_app\_prefix) | Prefix to use when naming AWS resources | `string` | `"vslurm"` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region to deploy the instances in | `string` | n/a | yes |
+| <a name="input_epel9_gpg_key_url"></a> [epel9\_gpg\_key\_url](#input\_epel9\_gpg\_key\_url) | URL for the EPEL9 GPG key | `string` | `"https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"` | no |
+| <a name="input_epel9_rpm_url"></a> [epel9\_rpm\_url](#input\_epel9\_rpm\_url) | URL for the EPEL9 RPM repository | `string` | `"https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"` | no |
+| <a name="input_git_args"></a> [git\_args](#input\_git\_args) | Options provided to git clone | `string` | `"-b main --depth 1"` | no |
+| <a name="input_git_repo_ansible"></a> [git\_repo\_ansible](#input\_git\_repo\_ansible) | Github repository URL | `string` | `"https://github.com/UCL-ARC/ansible-vslurm-config.git"` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | AWS instance type for the instances | `string` | `"t2.medium"` | no |
 | <a name="input_node_count"></a> [node\_count](#input\_node\_count) | Number of compute nodes to initialize the cluster with | `number` | `2` | no |
-| <a name="input_rhel9_ami_id"></a> [rhel9\_ami\_id](#input\_rhel9\_ami\_id) | RHEL9 AMI ID for the instances | `string` | n/a | yes |
+| <a name="input_rhel9_ami_name_pattern"></a> [rhel9\_ami\_name\_pattern](#input\_rhel9\_ami\_name\_pattern) | RHEL9 AMI name pattern to match on for the instances | `string` | `"RHEL-9.2.0*"` | no |
 | <a name="input_rhel9_log_dir"></a> [rhel9\_log\_dir](#input\_rhel9\_log\_dir) | Path on the RHEL9 instance to the log directory used by cloud-init | `string` | `"/var/log"` | no |
 | <a name="input_rhel9_root_home"></a> [rhel9\_root\_home](#input\_rhel9\_root\_home) | Path on the RHEL9 instance to the root home directory | `string` | `"/root"` | no |
-| <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | AWS subnet ID for the subnet to deploy the instances in | `string` | n/a | yes |
-| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | AWS VPC ID for the VPC that the subnet is deployed in | `string` | n/a | yes |
+| <a name="input_subnet_name"></a> [subnet\_name](#input\_subnet\_name) | Name of the AWS subnet to deploy the instances in | `string` | n/a | yes |
+| <a name="input_username"></a> [username](#input\_username) | Username for ssh connections | `string` | `"ec2-user"` | no |
+| <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Name of the AWS VPC that the instances will be deployed in | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_configurer_ssh_command"></a> [configurer\_ssh\_command](#output\_configurer\_ssh\_command) | An SSH command to access the configurer EC2 instance |
-| <a name="output_configurer_username_and_host"></a> [configurer\_username\_and\_host](#output\_configurer\_username\_and\_host) | The configurer username and public IP address |
 | <a name="output_server_ssh_command"></a> [server\_ssh\_command](#output\_server\_ssh\_command) | An ssh command to connect from the local deployer to the server EC2 instance |
-| <a name="output_server_username_and_host"></a> [server\_username\_and\_host](#output\_server\_username\_and\_host) | The server username and public IP address |
-| <a name="output_ssh_args"></a> [ssh\_args](#output\_ssh\_args) | Options for the SSH command |
 
 ---
 <!-- END_TF_DOCS -->
