@@ -68,9 +68,9 @@ variable "instance_type" {
   description = "AWS instance type for the instances"
 }
 
-variable "subnet_id" {
+variable "subnet_name" {
   type        = string
-  description = "AWS subnet ID for the subnet to deploy the instances in"
+  description = "Name of the AWS subnet to deploy the instances in"
 }
 
 variable "vpc_name" {

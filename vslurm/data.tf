@@ -6,6 +6,19 @@ data "aws_vpc" "vpc" {
   }
 }
 
+# Get data about the subnet
+data "aws_subnet" "subnet" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.vpc.id]
+  }
+
+  filter {
+    name   = "tag:Name"
+    values = [var.subnet_name]
+  }
+}
+
 # Get the local deployer's IP address
 # to permit incoming ssh traffic
 data "http" "local_ip" {

@@ -16,7 +16,7 @@ module "compute_node" {
   app_prefix         = var.app_prefix
   node_name          = each.value
   key_name           = aws_key_pair.ssh.key_name
-  subnet_id          = var.subnet_id
+  subnet_id          = data.aws_subnet.subnet.id
   security_group_ids = [aws_security_group.default.id, aws_security_group.node.id]
   node_instance_type = var.instance_type
   ami                = var.rhel9_ami_id
