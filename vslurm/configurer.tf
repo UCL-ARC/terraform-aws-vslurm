@@ -16,8 +16,12 @@ data "cloudinit_config" "cloudinit_configurer" {
   part {
     filename     = "cloudinit-configurer"
     content_type = "text/x-shellscript"
-    content = file(
-      "${path.module}/templates/cloudinit.configurer"
+    content = templatefile(
+      "${path.module}/templates/cloudinit.configurer",
+      {
+        ansible_inventory_path = "${var.rhel9_root_home}/ansible_inventory"
+        username               = var.username
+      }
     )
   }
 

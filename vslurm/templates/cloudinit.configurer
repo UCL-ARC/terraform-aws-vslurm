@@ -1,4 +1,12 @@
 #!/bin/bash -e
 
+export ANSIBLE_INVENTORY=${ansible_inventory_path}
+export REMOTE_USER=${username}
+
 sudo dnf -y install git python3-pip
 pip install --no-input ansible
+
+echo "export ANSIBLE_INVENTORY=$ANSIBLE_INVENTORY" >> /root/.bashrc
+echo "export ANSIBLE_REMOTE_USER=$REMOTE_USER" >> /root/.bashrc
+echo "export ANSIBLE_BECOME=True" >> /root/.bashrc
+echo "export ANSIBLE_HOST_KEY_CHECKING=False" >> /root/.bashrc
