@@ -8,7 +8,7 @@ data "cloudinit_config" "cloudinit_configurer" {
     content = templatefile(
       "${path.module}/templates/cloudinit",
       {
-        nickname = "${var.app-prefix}-configurer"
+        nickname = "${var.app_prefix}-configurer"
       }
     )
   }
