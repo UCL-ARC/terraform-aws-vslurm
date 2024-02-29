@@ -69,4 +69,19 @@ resource "terraform_data" "configure_slurm" {
     destination = "${var.rhel9_root_home}/.ssh/id_rsa"
   }
 
+  provisioner "remote-exec" {
+    inline = [
+      "set -e",
+      "git clone ${var.git_args} ${var.git_repo_ansible} ${var.rhel9_root_home}/ansible-vslurm",
+      "cd ${var.rhel9_root_home}/ansible-vslurm",
+      "ansible-playbook -v cluster.yaml --tags common_init",
+      "ansible-playbook -v cluster.yaml --tags slurm_common",
+      "ansible-playbook -v cluster.yaml --tags slurm_database",
+      "ansible-playbook -v cluster.yaml --tags slurm_server",
+      "ansible-playbook -v cluster.yaml --tags slurm_login",
+      "ansible-playbook -v cluster.yaml --tags slurm_compute",
+      "ansible all -m ansible.builtin.reboot",
+      "ansible-playbook cluster.yaml"
+    ]
+  }
 }
