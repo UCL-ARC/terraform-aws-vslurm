@@ -41,16 +41,3 @@ all:
       NO_PROXY: ""
       http_proxy: ""
       https_proxy: ""
-
-
-[s]
- ansible_ssh_host=
-[n]
-${management_nodes.nfs_server.tags_all.host_alias} ansible_ssh_host=${management_nodes.nfs_server.private_ip}
-[d]
-${management_nodes.database.tags_all.host_alias} ansible_ssh_host=${management_nodes.database.private_ip}
-[l]
-${management_nodes.login.tags_all.host_alias} ansible_ssh_host=${management_nodes.login.private_ip}
-[c]
-%{ for node in compute_nodes[*] ~}
-${node.tags_all.host_alias} ansible_ssh_host=${node.private_ip}
