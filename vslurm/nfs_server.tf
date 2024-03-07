@@ -11,9 +11,23 @@ data "cloudinit_config" "cloudinit_nfs_server" {
   }
 
   part {
-    filename     = "cloudinit.yaml"
-    content_type = "text/cloud-config"
-    content      = file("${path.module}/templates/cloudinit.yaml")
+    filename     = "cloudinit-cluster"
+    content_type = "text/x-shellscript"
+    content = templatefile(
+      "${path.module}/templates/cloudinit.cluster",
+      {
+        epel9_rpm_url = var.epel9_rpm_url
+        munge_dir     = local.munge_dir
+        slurm_dir     = local.slurm_dir
+        log_dir       = var.rhel9_log_dir
+      }
+    )
+  }
+
+  part {
+    filename     = "cloudinit-cluster-nfs-server"
+    content_type = "text/x-shellscript"
+    content      = file("${path.module}/templates/cloudinit.cluster.nfs-server")
   }
 }
 

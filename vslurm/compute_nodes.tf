@@ -30,14 +30,28 @@ data "cloudinit_config" "cloudinit_compute_node" {
     content = templatefile(
       "${path.module}/templates/cloudinit",
       {
-        nickname = "${var.app_prefix}-node-basic" # todo: this can be fixed when i switch from count to foreach
+        nickname = "${var.app_prefix}-node-basic" # todo: this can be fixed?
       }
     )
   }
 
   part {
-    filename     = "cloudinit.yaml"
-    content_type = "text/cloud-config"
-    content      = file("${path.module}/templates/cloudinit.yaml")
+    filename     = "cloudinit-cluster"
+    content_type = "text/x-shellscript"
+    content = templatefile(
+      "${path.module}/templates/cloudinit.cluster",
+      {
+        epel9_rpm_url = var.epel9_rpm_url
+        munge_dir     = local.munge_dir
+        slurm_dir     = local.slurm_dir
+        log_dir       = var.rhel9_log_dir
+      }
+    )
+  }
+
+  part {
+    filename     = "cloudinit-cluster-nfs-compute-node"
+    content_type = "text/x-shellscript"
+    content      = file("${path.module}/templates/cloudinit.cluster.compute-node")
   }
 }
