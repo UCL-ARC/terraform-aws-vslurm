@@ -38,17 +38,8 @@ resource "terraform_data" "configure_slurm" {
     content = templatefile(
       "${path.module}/templates/ansible_inventory",
       {
-        management_nodes = local.management_node
-        compute_nodes    = [for key, value in module.compute_node : value]
-      }
-    )
-    destination = "/home/${var.username}/ansible_inventory"
-  }
-
-  provisioner "file" {
-    content = templatefile(
-      "${path.module}/templates/ansible_variables.yaml",
-      {
+        management_nodes  = local.management_node
+        compute_nodes     = [for key, value in module.compute_node : value]
         cluster_name      = var.app_prefix,
         mysql_socket      = local.mysql_socket,
         log_dir           = var.rhel9_log_dir,
@@ -59,9 +50,10 @@ resource "terraform_data" "configure_slurm" {
         username          = var.username,
         user_home         = local.user_home,
         root_home         = var.rhel9_root_home
+        ssh_rsa_key_path  = "${local.user_home}/.ssh/id_rsa"
       }
     )
-    destination = "/home/${var.username}/ansible_variables"
+    destination = "/home/${var.username}/ansible_inventory"
   }
 
   provisioner "file" {
