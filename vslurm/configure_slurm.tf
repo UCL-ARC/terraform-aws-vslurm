@@ -40,15 +40,15 @@ resource "terraform_data" "configure_slurm" {
       {
         management_nodes  = local.management_node
         compute_nodes     = [for key, value in module.compute_node : value]
-        cluster_name      = var.app_prefix,
-        mysql_socket      = local.mysql_socket,
-        log_dir           = var.rhel9_log_dir,
-        slurm_dir         = local.slurm_dir,
-        munge_dir         = local.munge_dir,
-        epel9_gpg_key_url = var.epel9_gpg_key_url,
-        epel9_rpm_url     = var.epel9_rpm_url,
-        username          = var.username,
-        user_home         = local.user_home,
+        cluster_name      = var.app_prefix
+        mysql_socket      = local.mysql_socket
+        log_dir           = var.rhel9_log_dir
+        slurm_dir         = local.slurm_dir
+        munge_dir         = local.munge_dir
+        epel9_gpg_key_url = var.epel9_gpg_key_url
+        epel9_rpm_url     = var.epel9_rpm_url
+        username          = var.username
+        user_home         = local.user_home
         root_home         = var.rhel9_root_home
         ssh_rsa_key_path  = "${local.user_home}/.ssh/id_rsa"
       }
@@ -63,7 +63,7 @@ resource "terraform_data" "configure_slurm" {
 
   provisioner "remote-exec" {
     inline = [
-      "set -e",
+      "set -e -x",
       "sudo bash ./hosts",
       "chmod 0700 /home/${var.username}/.ssh/id_rsa",
       "git clone ${var.git_args} ${var.git_repo_ansible} /home/${var.username}/ansible-vslurm",
