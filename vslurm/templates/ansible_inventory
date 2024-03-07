@@ -13,13 +13,11 @@ all:
     l:
       hosts:
         ${management_nodes.login.tags_all.host_alias}:
-        login:
           ansible_ssh_host: ${management_nodes.login.private_ip}
     n:
       hosts:
-        ${management_nodes.nfs-server.tags_all.host_alias}:
-        nfs-server:
-          ansible_ssh_host: ${management_nodes.nfs-server.private_ip}
+        ${management_nodes.nfs_server.tags_all.host_alias}:
+          ansible_ssh_host: ${management_nodes.nfs_server.private_ip}
     s:
       hosts:
         ${management_nodes.server.tags_all.host_alias}:
