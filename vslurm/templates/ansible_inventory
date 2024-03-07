@@ -1,5 +1,50 @@
+all:
+  children:
+    c:
+      hosts:
+%{ for node in compute_nodes[*] ~}
+        ${node.tags_all.host_alias}:
+          ansible_ssh_host: ${node.private_ip}
+%{ endfor ~}
+    d:
+      hosts:
+        ${management_nodes.database.tags_all.host_alias}:
+          ansible_ssh_host: ${management_nodes.database.private_ip}
+    l:
+      hosts:
+        ${management_nodes.login.tags_all.host_alias}:
+        login:
+          ansible_ssh_host: ${management_nodes.login.private_ip}
+    n:
+      hosts:
+        ${management_nodes.nfs-server.tags_all.host_alias}:
+        nfs-server:
+          ansible_ssh_host: ${management_nodes.nfs-server.private_ip}
+    s:
+      hosts:
+        ${management_nodes.server.tags_all.host_alias}:
+          ansible_ssh_host: ${management_nodes.server.private_ip}
+  vars:
+    cluster_vars:
+      cluster_name: "${cluster_name}"
+      mysql_socket: "${mysql_socket}"
+      log_dir: "${log_dir}"
+      slurm_dir: "${slurm_dir}"
+      munge_dir: "${munge_dir}"
+      epel9_gpg_key_url: "${epel9_gpg_key_url}"
+      epel9_rpm_url: "${epel9_rpm_url}"
+      username: "${username}"
+      user_home: "${user_home}"
+      root_home: "${root_home}"
+      ssh_rsa_key_path: "${ssh_rsa_key_path}"
+    proxy_env:
+      NO_PROXY: ""
+      http_proxy: ""
+      https_proxy: ""
+
+
 [s]
-${management_nodes.server.tags_all.host_alias} ansible_ssh_host=${management_nodes.server.private_ip}
+ ansible_ssh_host=
 [n]
 ${management_nodes.nfs_server.tags_all.host_alias} ansible_ssh_host=${management_nodes.nfs_server.private_ip}
 [d]
@@ -9,4 +54,3 @@ ${management_nodes.login.tags_all.host_alias} ansible_ssh_host=${management_node
 [c]
 %{ for node in compute_nodes[*] ~}
 ${node.tags_all.host_alias} ansible_ssh_host=${node.private_ip}
-%{ endfor ~}
