@@ -19,7 +19,7 @@ data "cloudinit_config" "cloudinit_configurer" {
     content = templatefile(
       "${path.module}/templates/cloudinit.configurer",
       {
-        ansible_inventory_path = "${var.rhel9_root_home}/ansible_inventory"
+        ansible_inventory_path = "/home/${var.username}/ansible_inventory"
         username               = var.username
       }
     )
