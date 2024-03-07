@@ -10,8 +10,8 @@ locals {
 resource "terraform_data" "configure_slurm" {
 
   triggers_replace = concat(
-    local.management_node[*],
-    aws_instance.compute_node[*]
+    [for key, value in local.management_node : value.private_ip],
+    [for key, value in module.compute_node : value.private_ip]
   )
 
   connection {
@@ -23,7 +23,7 @@ resource "terraform_data" "configure_slurm" {
 
   provisioner "file" {
     content = templatefile(
-      "${module.path}/templates/cluster_hosts",
+      "${path.module}/templates/cluster_hosts",
       {
         nodes = concat(
           [for key, value in local.management_node : value],
@@ -31,23 +31,23 @@ resource "terraform_data" "configure_slurm" {
         )
       }
     )
-    destination = "/etc/hosts"
+    destination = "/home/${var.username}/hosts"
   }
 
   provisioner "file" {
     content = templatefile(
-      "${module.path}/templates/ansible_inventory",
+      "${path.module}/templates/ansible_inventory",
       {
         management_nodes = local.management_node
         compute_nodes    = [for key, value in module.compute_node : value]
       }
     )
-    destination = "${var.rhel9_root_home}/ansible_inventory"
+    destination = "/home/${var.username}/ansible_inventory"
   }
 
   provisioner "file" {
     content = templatefile(
-      "${module.path}/templates/ansible_variables.yaml",
+      "${path.module}/templates/ansible_variables.yaml",
       {
         cluster_name      = var.app_prefix,
         mysql_socket      = local.mysql_socket,
@@ -61,19 +61,21 @@ resource "terraform_data" "configure_slurm" {
         root_home         = var.rhel9_root_home
       }
     )
-    destination = "${var.rhel9_root_home}/ansible_variables"
+    destination = "/home/${var.username}/ansible_variables"
   }
 
   provisioner "file" {
     content     = tls_private_key.global_key.private_key_pem
-    destination = "${var.rhel9_root_home}/.ssh/id_rsa"
+    destination = "/home/${var.username}/.ssh/id_rsa"
   }
 
   provisioner "remote-exec" {
     inline = [
       "set -e",
-      "git clone ${var.git_args} ${var.git_repo_ansible} ${var.rhel9_root_home}/ansible-vslurm",
-      "cd ${var.rhel9_root_home}/ansible-vslurm",
+      "sudo bash ./hosts",
+      "chmod 0700 /home/${var.username}/.ssh/id_rsa",
+      "git clone ${var.git_args} ${var.git_repo_ansible} /home/${var.username}/ansible-vslurm",
+      "cd /home/${var.username}/ansible-vslurm",
       "ansible-playbook -v cluster.yaml --tags common_init",
       "ansible-playbook -v cluster.yaml --tags slurm_common",
       "ansible-playbook -v cluster.yaml --tags slurm_database",
