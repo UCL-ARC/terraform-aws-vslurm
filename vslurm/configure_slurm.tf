@@ -68,12 +68,12 @@ resource "terraform_data" "configure_slurm" {
       "chmod 0700 /home/${var.username}/.ssh/id_rsa",
       "git clone ${var.git_args} ${var.git_repo_ansible} /home/${var.username}/ansible-vslurm",
       "cd /home/${var.username}/ansible-vslurm",
-      "ansible-playbook -v cluster.yaml --tags common_init",
-      "ansible-playbook -v cluster.yaml --tags slurm_common",
-      "ansible-playbook -v cluster.yaml --tags slurm_database",
-      "ansible-playbook -v cluster.yaml --tags slurm_server",
-      "ansible-playbook -v cluster.yaml --tags slurm_login",
-      "ansible-playbook -v cluster.yaml --tags slurm_compute",
+      "ansible-playbook cluster.yaml --tags common_init",
+      "ansible-playbook cluster.yaml --tags slurm_common",
+      "ansible-playbook cluster.yaml --tags slurm_database",
+      "ansible-playbook cluster.yaml --tags slurm_server",
+      "ansible-playbook cluster.yaml --tags slurm_login",
+      "ansible-playbook cluster.yaml --tags slurm_compute",
       "ansible all -m ansible.builtin.reboot",
       "ansible-playbook cluster.yaml"
     ]
