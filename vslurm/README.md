@@ -20,6 +20,7 @@
 | <a name="provider_cloudinit"></a> [cloudinit](#provider\_cloudinit) | >= 2.3.2 |
 | <a name="provider_http"></a> [http](#provider\_http) | >= 3.4.0 |
 | <a name="provider_local"></a> [local](#provider\_local) | >= 2.4.0 |
+| <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | >= 4.0.4 |
 
 ## Modules
@@ -48,6 +49,8 @@
 | [local_file.cloudinit_configurer_rendered](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.ssh_public_key_openssh](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_sensitive_file.ssh_private_key_pem](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/sensitive_file) | resource |
+| [terraform_data.cloudinit_status](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
+| [terraform_data.configure_slurm](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [tls_private_key.global_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [aws_ami.rhel9](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_subnet.subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
@@ -68,7 +71,7 @@
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region to deploy the instances in | `string` | n/a | yes |
 | <a name="input_epel9_gpg_key_url"></a> [epel9\_gpg\_key\_url](#input\_epel9\_gpg\_key\_url) | URL for the EPEL9 GPG key | `string` | `"https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"` | no |
 | <a name="input_epel9_rpm_url"></a> [epel9\_rpm\_url](#input\_epel9\_rpm\_url) | URL for the EPEL9 RPM repository | `string` | `"https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm"` | no |
-| <a name="input_git_args"></a> [git\_args](#input\_git\_args) | Options provided to git clone | `string` | `"-b main --depth 1"` | no |
+| <a name="input_git_args"></a> [git\_args](#input\_git\_args) | Options provided to git clone | `string` | `"-b v1.0.1 --depth 1 -q"` | no |
 | <a name="input_git_repo_ansible"></a> [git\_repo\_ansible](#input\_git\_repo\_ansible) | Github repository URL | `string` | `"https://github.com/UCL-ARC/ansible-vslurm-config.git"` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | AWS instance type for the instances | `string` | `"t2.medium"` | no |
 | <a name="input_node_count"></a> [node\_count](#input\_node\_count) | Number of compute nodes to initialize the cluster with | `number` | `2` | no |
