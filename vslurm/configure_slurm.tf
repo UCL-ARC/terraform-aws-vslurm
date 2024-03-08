@@ -5,6 +5,9 @@ locals {
     login      = aws_instance.login,
     nfs_server = aws_instance.nfs_server
   }
+
+  timestamp     = formatdate("YYYYMMDDhhmm", timestamp())
+  git_repo_path = "/home/${var.username}/ansible-vslurm_${local.timestamp}"
 }
 
 resource "terraform_data" "configure_slurm" {
@@ -68,8 +71,8 @@ resource "terraform_data" "configure_slurm" {
       "set -e -x",
       "sudo bash ./hosts",
       "chmod 0700 /home/${var.username}/.ssh/id_rsa",
-      "git clone ${var.git_args} ${var.git_repo_ansible} /home/${var.username}/ansible-vslurm",
-      "cd /home/${var.username}/ansible-vslurm",
+      "git clone ${var.git_args} ${var.git_repo_ansible} ${local.git_repo_path}",
+      "cd ${local.git_repo_path}",
       "ansible-playbook cluster.yaml --tags common_init",
       "ansible-playbook cluster.yaml --tags slurm_common",
       "ansible-playbook cluster.yaml --tags slurm_database",
