@@ -27,7 +27,6 @@ data "cloudinit_config" "cloudinit_configurer" {
 
 }
 
-
 resource "aws_instance" "configurer" {
   ami           = data.aws_ami.rhel9.id
   instance_type = var.instance_type
