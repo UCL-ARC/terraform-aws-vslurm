@@ -48,7 +48,7 @@ variable "git_repo_ansible" {
 
 variable "git_args" {
   type        = string
-  default     = "-b main --depth 1"
+  default     = "-b v1.0.1 --depth 1 -q"
   description = "Options provided to git clone"
 }
 
