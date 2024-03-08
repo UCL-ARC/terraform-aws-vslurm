@@ -9,6 +9,8 @@ locals {
 
 resource "terraform_data" "configure_slurm" {
 
+  depends_on = terraform_data.cloudinit_status
+
   triggers_replace = concat(
     [for key, value in local.management_node : value.private_ip],
     [for key, value in module.compute_node : value.private_ip]
