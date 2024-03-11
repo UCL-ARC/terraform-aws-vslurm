@@ -9,7 +9,7 @@ data "cloudinit_config" "cloudinit_database" {
 }
 
 resource "aws_instance" "database" {
-  ami           = data.aws_ami.rhel9.id
+  ami           = data.aws_ami.database.id
   instance_type = var.instance_type
   key_name      = aws_key_pair.ssh.key_name
 
