@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 .PHONY: *
-terraform_dir = ./vslurm
+vslurm_dir = ./vslurm
+vslurm_images_dir = ./vslurm-images
 
 define terraform-apply
 	. init.sh $$ \
@@ -28,16 +29,28 @@ define terraform-destroy
 endef
 
 vslurm:
-	$(call terraform-apply, $(terraform_dir))
+	$(call terraform-apply, $(vslurm_dir))
+
+vslurm-images:
+	$(call terraform-apply, $(vslurm_images_dir))
 
 vslurm-dry-run:
-	$(call terraform-plan, $(terraform_dir))
+	$(call terraform-plan, $(vslurm_dir))
+
+vslurm-images-dry-run:
+	$(call terraform-plan, $(vslurm_images_dir))
 
 vslurm-destroy:
-	$(call terraform-destroy, $(terraform_dir))
+	$(call terraform-destroy, $(vslurm_dir))
+
+vslurm-images-destroy:
+	$(call terraform-destroy, $(vslurm_images_dir))
 
 vslurm-ssh:
-	cd $(terraform_dir) && ../server_ssh.sh
+	cd $(vslurm_dir) && ../server_ssh.sh
+
+vslurm-images-ssh:
+	cd $(vslurm_images_dir) && ../server_ssh.sh
 
 clean:
 	rm ./*\~ ./*\# \
