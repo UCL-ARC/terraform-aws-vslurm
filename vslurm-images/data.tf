@@ -19,23 +19,100 @@ data "aws_subnet" "subnet" {
   }
 }
 
-# Identify the latest suitable RHEL image
-data "aws_ami" "rhel9" {
+data "aws_ami" "configurer" {
   most_recent = true
 
-  # This filters for RHEL 9+ images
   filter {
     name   = "name"
-    values = [var.rhel9_ami_name_pattern]
+    values = [var.ami_name_pattern_configurer]
   }
 
-  # This filters for images which will work with the t2.micro type
   filter {
     name   = "architecture"
     values = ["x86_64"]
   }
 
-  owners = ["309956199498"] # Red Hat
+  owners = [var.ami_owner]
+}
+
+data "aws_ami" "server" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = [var.ami_name_pattern_server]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  owners = [var.ami_owner]
+}
+
+data "aws_ami" "database" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = [var.ami_name_pattern_database]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  owners = [var.ami_owner]
+}
+
+data "aws_ami" "login" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = [var.ami_name_pattern_login]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  owners = [var.ami_owner]
+}
+
+data "aws_ami" "nfs_server" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = [var.ami_name_pattern_nfs_server]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  owners = [var.ami_owner]
+}
+
+data "aws_ami" "compute_node" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = [var.ami_name_pattern_compute_node]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  owners = [var.ami_owner]
 }
 
 # Get the local deployer's IP address
