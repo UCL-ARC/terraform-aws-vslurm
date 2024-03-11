@@ -4,24 +4,9 @@ data "cloudinit_config" "cloudinit_configurer" {
 
   part {
     filename     = "cloudinit"
-    content_type = "text/x-shellscript"
-    content = templatefile(
-      "${path.module}/templates/cloudinit",
-      {
-        nickname = "${var.app_prefix}-configurer"
-      }
-    )
-  }
-
-  part {
-    filename     = "cloudinit-configurer"
-    content_type = "text/x-shellscript"
-    content = templatefile(
-      "${path.module}/templates/cloudinit.configurer",
-      {
-        ansible_inventory_path = "/home/${var.username}/ansible_inventory"
-        username               = var.username
-      }
+    content_type = "text/cloud-config"
+    content = file(
+      "${path.module}/templates/cloudinit.yaml"
     )
   }
 
