@@ -65,7 +65,7 @@ variable "ami_owner" {
 
 variable "ami_name_pattern_configurer" {
   type        = string
-  default     = "vslurm-cluster-configurer*"
+  default     = "vslurm-configurer*"
   description = "RHEL9 AMI name pattern to match on for the instances"
 }
 
