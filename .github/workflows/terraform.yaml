@@ -20,7 +20,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./vslurm
+        working-directory: ./vslurm,./vslurm-images
 
     steps:
       # Checkout the repository to the GitHub Actions runner
