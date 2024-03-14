@@ -52,7 +52,12 @@
 | [terraform_data.cloudinit_status](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [terraform_data.configure_slurm](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [tls_private_key.global_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
-| [aws_ami.rhel9](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_ami.compute_node](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_ami.configurer](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_ami.database](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_ami.login](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_ami.nfs_server](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_ami.server](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_subnet.subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
 | [aws_vpc.vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 | [cloudinit_config.cloudinit_compute_node](https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config) | data source |
@@ -67,6 +72,13 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_ami_name_pattern_compute_node"></a> [ami\_name\_pattern\_compute\_node](#input\_ami\_name\_pattern\_compute\_node) | RHEL9 AMI name pattern to match on for the instances | `string` | `"vslurm-cluster-compute-node*"` | no |
+| <a name="input_ami_name_pattern_configurer"></a> [ami\_name\_pattern\_configurer](#input\_ami\_name\_pattern\_configurer) | RHEL9 AMI name pattern to match on for the instances | `string` | `"vslurm-configurer*"` | no |
+| <a name="input_ami_name_pattern_database"></a> [ami\_name\_pattern\_database](#input\_ami\_name\_pattern\_database) | RHEL9 AMI name pattern to match on for the instances | `string` | `"vslurm-cluster-database*"` | no |
+| <a name="input_ami_name_pattern_login"></a> [ami\_name\_pattern\_login](#input\_ami\_name\_pattern\_login) | RHEL9 AMI name pattern to match on for the instances | `string` | `"vslurm-cluster-login*"` | no |
+| <a name="input_ami_name_pattern_nfs_server"></a> [ami\_name\_pattern\_nfs\_server](#input\_ami\_name\_pattern\_nfs\_server) | RHEL9 AMI name pattern to match on for the instances | `string` | `"vslurm-cluster-nfs-server*"` | no |
+| <a name="input_ami_name_pattern_server"></a> [ami\_name\_pattern\_server](#input\_ami\_name\_pattern\_server) | RHEL9 AMI name pattern to match on for the instances | `string` | `"vslurm-cluster-server*"` | no |
+| <a name="input_ami_owner"></a> [ami\_owner](#input\_ami\_owner) | AWS account number that owns the intended images; default is RH | `string` | `"309956199498"` | no |
 | <a name="input_app_prefix"></a> [app\_prefix](#input\_app\_prefix) | Prefix to use when naming AWS resources | `string` | `"vslurm"` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region to deploy the instances in | `string` | n/a | yes |
 | <a name="input_epel9_gpg_key_url"></a> [epel9\_gpg\_key\_url](#input\_epel9\_gpg\_key\_url) | URL for the EPEL9 GPG key | `string` | `"https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-9"` | no |
@@ -75,7 +87,6 @@
 | <a name="input_git_repo_ansible"></a> [git\_repo\_ansible](#input\_git\_repo\_ansible) | Github repository URL | `string` | `"https://github.com/UCL-ARC/ansible-vslurm-config.git"` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | AWS instance type for the instances | `string` | `"t2.medium"` | no |
 | <a name="input_node_count"></a> [node\_count](#input\_node\_count) | Number of compute nodes to initialize the cluster with | `number` | `2` | no |
-| <a name="input_rhel9_ami_name_pattern"></a> [rhel9\_ami\_name\_pattern](#input\_rhel9\_ami\_name\_pattern) | RHEL9 AMI name pattern to match on for the instances | `string` | `"RHEL-9.2.0*"` | no |
 | <a name="input_rhel9_log_dir"></a> [rhel9\_log\_dir](#input\_rhel9\_log\_dir) | Path on the RHEL9 instance to the log directory used by cloud-init | `string` | `"/var/log"` | no |
 | <a name="input_rhel9_root_home"></a> [rhel9\_root\_home](#input\_rhel9\_root\_home) | Path on the RHEL9 instance to the root home directory | `string` | `"/root"` | no |
 | <a name="input_subnet_name"></a> [subnet\_name](#input\_subnet\_name) | Name of the AWS subnet to deploy the instances in | `string` | n/a | yes |
