@@ -1,5 +1,5 @@
 .DS_store
-.env
+.env*
 .terraform
 .terraform.lock.hcl
 ansible/slurm_common/files/

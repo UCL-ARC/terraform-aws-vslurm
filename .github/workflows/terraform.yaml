@@ -20,7 +20,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./vslurm
 
     steps:
       # Checkout the repository to the GitHub Actions runner
@@ -38,12 +37,18 @@ jobs:
       # modules, etc.
       - name: Terraform Init
         run: terraform init
+        with:
+          working-dir: ./vslurm,./vslurm-images
 
       # Checks that all Terraform configuration files adhere to a
       # canonical format
       - name: Terraform Format
-        run: terraform fmt -check
+        run: terraform fmt -check -recursive
+        with:
+          working-dir: ./vslurm,./vslurm-images
 
       # Checks that Terraform configuration is valid
       - name: Terraform Validate
         run: terraform validate
+        with:
+          working-dir: ./vslurm,./vslurm-images
