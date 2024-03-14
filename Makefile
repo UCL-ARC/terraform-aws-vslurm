@@ -1,6 +1,9 @@
 SHELL := /bin/bash
 .PHONY: *
 terraform_dir = ./vslurm
+ifeq ($(IMAGES),T)
+	terraform_dir = ./vslurm-images
+endif
 
 define terraform-apply
 	. init.sh $$ \
