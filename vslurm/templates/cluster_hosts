@@ -1,3 +1,3 @@
 %{ for node in nodes ~}
-echo ${node.private_ip} ${node.private_dns} ${node.tags_all.host_alias} >> /etc/hosts
+echo ${node.private_ip} ${node.tags_all.host_alias} ${node.private_dns} >> /etc/hosts
 %{ endfor ~}
