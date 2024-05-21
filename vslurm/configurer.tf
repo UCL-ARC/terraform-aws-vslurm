@@ -12,6 +12,19 @@ data "cloudinit_config" "cloudinit_configurer" {
       }
     )
   }
+
+  part {
+    filename     = "cloudinit-configurer"
+    content_type = "text/x-shellscript"
+    content = templatefile(
+      "${path.module}/templates/cloudinit.configurer",
+      {
+        ansible_inventory_path = "/home/${var.username}/ansible_inventory"
+        username               = var.username
+      }
+    )
+  }
+
 }
 
 resource "aws_instance" "configurer" {
