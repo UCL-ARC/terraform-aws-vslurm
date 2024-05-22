@@ -2,11 +2,8 @@ data "cloudinit_config" "cloudinit_nfs_server" {
   part {
     filename     = "cloudinit"
     content_type = "text/x-shellscript"
-    content = templatefile(
-      "${path.module}/templates/cloudinit",
-      {
-        nickname = "${var.app_prefix}-nfs-server"
-      }
+    content = file(
+      "${path.module}/templates/cloudinit"
     )
   }
 

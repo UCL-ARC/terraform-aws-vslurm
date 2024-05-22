@@ -5,11 +5,8 @@ data "cloudinit_config" "cloudinit_configurer" {
   part {
     filename     = "cloudinit"
     content_type = "text/x-shellscript"
-    content = templatefile(
-      "${path.module}/templates/cloudinit",
-      {
-        nickname = "${var.app_prefix}-configurer"
-      }
+    content = file(
+      "${path.module}/templates/cloudinit"
     )
   }
 
