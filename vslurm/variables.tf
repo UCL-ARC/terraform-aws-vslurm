@@ -59,7 +59,7 @@ variable "aws_region" {
 
 variable "rhel9_ami_name_pattern" {
   type        = string
-  default     = "RHEL-9.2.0*"
+  default     = "RHEL-9.3.0*"
   description = "RHEL9 AMI name pattern to match on for the instances"
 }
 
